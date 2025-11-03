@@ -1,77 +1,83 @@
-import SectionTag from '../UI/SectionTag';
-
 const FullMenu = () => {
-  const menuItems = [
-    {
-      name: "Mie Yamin Original",
-      description: "Mie klasik dengan ayam kecap manis",
-      price: "Rp18.000",
-      image: "https://placehold.co/100x100/EAD9C8/333333?text=Mie+Original"
-    },
-    {
-      name: "Mie Yamin Level 5",
-      description: "Pedas dan penuh rasa bagi para pecinta rempah",
-      price: "Rp20.000",
-      image: "https://placehold.co/100x100/EAD9C8/333333?text=Mie+Level+5"
-    },
-    {
-      name: "Mie Yamin Complete",
-      description: "Includes chicken, dumplings, meatballs, and sambal",
-      price: "Rp25.000",
-      image: "https://placehold.co/100x100/EAD9C8/333333?text=Mie+Complete"
-    },
-    {
-      name: "Pangsit Goreng (5 pcs)",
-      description: "Renyah dan gurih",
-      price: "Rp10.000",
-      image: "https://placehold.co/100x100/EAD9C8/333333?text=Pangsit+Goreng"
-    },
-    {
-      name: "Es Teh",
-      description: "teman minum yang sempurna",
-      price: "Rp5.000",
-      image: "https://placehold.co/100x100/EAD9C8/333333?text=Es+Teh"
-    }
-  ];
-
   return (
-    <section id="menu" className="py-5 bg-light">
-      <div className="container">
-        <div className="text-center mb-5">
-          <SectionTag variant="pink">Full Menu</SectionTag>
-          <h2 className="display-5 fw-bold mb-3">Pilihan Menu Lengkap</h2>
-          <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
-            Mie segar, topping melimpah, dan harga ramah di kantong
-          </p>
-        </div>
-        
-        <div className="row g-4">
-          {menuItems.map((item, index) => (
-            <div key={index} className="col-lg-4 col-md-6">
-              <div className="card border-0 shadow-sm h-100">
-                <div className="card-body">
-                  <div className="d-flex align-items-center gap-4">
-                    <img 
-                      src={item.image} 
-                      alt={item.name} 
-                      className="rounded-3 flex-shrink-0"
-                      style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-                    />
-                    <div className="flex-grow-1">
-                      <h5 className="card-title fw-bold mb-1">{item.name}</h5>
-                      <p className="card-text text-muted small mb-2">{item.description}</p>
-                      <div className="d-flex justify-content-between align-items-center">
-                        <span className="fw-bold text-warning">{item.price}</span>
-                        <a href="#" className="btn btn-success btn-sm">
-                          Order
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+    <section id="menu" className="py-24 bg-gray-50">
+      <div className="container mx-auto px-6 text-center">
+        <span className="section-tag tag-pink">Full Menu</span>
+        <h2 className="text-4xl font-bold mb-4">Pilihan Menu Lengkap</h2>
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-16">
+          Mie segar, topping melimpah, dan harga ramah di kantong
+        </p>
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Menu Item 1 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-6 flex items-center gap-6">
+            <img src="https://placehold.co/100x100/EAD9C8/333333?text=Mie+Original" alt="Mie Yamin Original" className="w-28 h-28 object-cover rounded-xl flex-shrink-0" />
+            <div className="text-left w-full">
+              <h4 className="text-xl font-bold">Mie Yamin Original</h4>
+              <p className="text-sm text-gray-600 mb-2">Mie klasik dengan ayam kecap manis</p>
+              <div className="flex justify-between items-center mt-3">
+                <span className="text-lg font-bold text-orange-500">Rp18.000</span>
+                <a href="#" className="bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition-all">
+                  Order
+                </a>
               </div>
             </div>
-          ))}
+          </div>
+          {/* Menu Item 2 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-6 flex items-center gap-6">
+            <img src="https://placehold.co/100x100/EAD9C8/333333?text=Mie+Level+5" alt="Mie Yamin Level 5" className="w-28 h-28 object-cover rounded-xl flex-shrink-0" />
+            <div className="text-left w-full">
+              <h4 className="text-xl font-bold">Mie Yamin Level 5</h4>
+              <p className="text-sm text-gray-600 mb-2">Pedas dan penuh rasa bagi para pecinta rempah</p>
+              <div className="flex justify-between items-center mt-3">
+                <span className="text-lg font-bold text-orange-500">Rp20.000</span>
+                <a href="#" className="bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition-all">
+                  Order
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* Menu Item 3 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-6 flex items-center gap-6">
+            <img src="https://placehold.co/100x100/EAD9C8/333333?text=Mie+Complete" alt="Mie Yamin Complete" className="w-28 h-28 object-cover rounded-xl flex-shrink-0" />
+            <div className="text-left w-full">
+              <h4 className="text-xl font-bold">Mie Yamin Complete</h4>
+              <p className="text-sm text-gray-600 mb-2">Includes chicken, dumplings, meatballs, and sambal</p>
+              <div className="flex justify-between items-center mt-3">
+                <span className="text-lg font-bold text-orange-500">Rp25.000</span>
+                <a href="#" className="bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition-all">
+                  Order
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* Menu Item 4 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-6 flex items-center gap-6">
+            <img src="https://placehold.co/100x100/EAD9C8/333333?text=Pangsit+Goreng" alt="Pangsit Goreng" className="w-28 h-28 object-cover rounded-xl flex-shrink-0" />
+            <div className="text-left w-full">
+              <h4 className="text-xl font-bold">Pangsit Goreng (5 pcs)</h4>
+              <p className="text-sm text-gray-600 mb-2">Renyah dan gurih</p>
+              <div className="flex justify-between items-center mt-3">
+                <span className="text-lg font-bold text-orange-500">Rp10.000</span>
+                <a href="#" className="bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition-all">
+                  Order
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* Menu Item 5 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-6 flex items-center gap-6">
+            <img src="https://placehold.co/100x100/EAD9C8/333333?text=Es+Teh" alt="Es Teh" className="w-28 h-28 object-cover rounded-xl flex-shrink-0" />
+            <div className="text-left w-full">
+              <h4 className="text-xl font-bold">Es Teh</h4>
+              <p className="text-sm text-gray-600 mb-2">teman minum yang sempurna</p>
+              <div className="flex justify-between items-center mt-3">
+                <span className="text-lg font-bold text-orange-500">Rp5.000</span>
+                <a href="#" className="bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition-all">
+                  Order
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

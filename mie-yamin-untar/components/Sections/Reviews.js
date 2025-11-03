@@ -1,94 +1,73 @@
-import SectionTag from '../UI/SectionTag';
-
 const Reviews = () => {
-  const reviews = [
-    {
-      rating: 5,
-      text: "Mie yamin terenak di sekitar kampus! Porsinya banyak, harganya ramah kantong mahasiswa. Toppingnya ngga pelit, rasanya emang juara!",
-      author: "Sarah Wijaya",
-      role: "Mahasiswa Untar"
-    },
-    {
-      rating: 4.5,
-      text: "Udah langganan dari jaman maba sampe sekarang kerja masih sering balik kesini. Rasanya konsisten, pelayanannya cepet, dan tempatnya nyaman.",
-      author: "Budi Santoso",
-      role: "Alumni Untar"
-    },
-    {
-      rating: 5,
-      text: "Level pedasnya beneran nampol! Mie Yamin Level 5-nya mantap. Cocok buat yang suka tantangan. Tapi yang original juga nagih. Perfecto!",
-      author: "Dina Rahma",
-      role: "Food Blogger"
-    }
-  ];
-
-  const renderStars = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-    
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<i key={i} className="fas fa-star"></i>);
-    }
-    
-    if (hasHalfStar) {
-      stars.push(<i key="half" className="fas fa-star-half-alt"></i>);
-    }
-    
-    const remainingStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < remainingStars; i++) {
-      stars.push(<i key={`empty-${i}`} className="far fa-star"></i>);
-    }
-    
-    return stars;
-  };
-
   return (
-    <section id="reviews" className="py-5 bg-white">
-      <div className="container">
-        <div className="text-center mb-5">
-          <SectionTag variant="blue">
-            <i className="fas fa-star me-1"></i> Customer Reviews
-          </SectionTag>
-          <h2 className="display-5 fw-bold mb-3">Review Pelanggan kami</h2>
-          <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
-            Real reviews from our beloved customers
-          </p>
-        </div>
-        
-        <div className="row g-4">
-          {reviews.map((review, index) => (
-            <div key={index} className="col-lg-4 col-md-6">
-              <div className="card border-0 shadow-sm h-100 position-relative">
-                <i className="fas fa-quote-left quote-icon"></i>
-                <div className="card-body position-relative">
-                  <div className="rating-stars mb-3">
-                    {renderStars(review.rating)}
-                  </div>
-                  <p className="card-text text-muted fst-italic mb-4">
-                    "{review.text}"
-                  </p>
-                  <div>
-                    <p className="fw-bold mb-1">{review.author}</p>
-                    <p className="text-muted small">{review.role}</p>
-                  </div>
-                </div>
-              </div>
+    <section id="reviews" className="py-24 bg-white">
+      <div className="container mx-auto px-6 text-center">
+        <span className="section-tag tag-blue">
+          <i className="fas fa-star text-xs mr-1"></i> Customer Reviews
+        </span>
+        <h2 className="text-4xl font-bold mb-4">Review Pelanggan kami</h2>
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-16">
+          Real reviews from our beloved customers
+        </p>
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Review 1 */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg text-left relative">
+            <i className="fas fa-quote-left text-orange-200 text-6xl absolute top-6 left-6 opacity-50 -z-10"></i>
+            <div className="text-yellow-400 mb-4">
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
             </div>
-          ))}
-        </div>
-        
-        <div className="text-center mt-5">
-          <div className="d-inline-flex align-items-center gap-2 fs-5 text-muted">
-            <div className="rating-stars">
+            <p className="text-gray-700 italic mb-6">
+              "Mie yamin terenak di sekitar kampus! Porsinya banyak, harganya ramah kantong mahasiswa. Toppingnya ngga pelit, rasanya emang juara!"
+            </p>
+            <p className="font-bold">Sarah Wijaya</p>
+            <p className="text-sm text-gray-500">Mahasiswa Untar</p>
+          </div>
+          {/* Review 2 */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg text-left relative">
+            <i className="fas fa-quote-left text-orange-200 text-6xl absolute top-6 left-6 opacity-50 -z-10"></i>
+            <div className="text-yellow-400 mb-4">
               <i className="fas fa-star"></i>
               <i className="fas fa-star"></i>
               <i className="fas fa-star"></i>
               <i className="fas fa-star"></i>
               <i className="fas fa-star-half-alt"></i>
             </div>
-            <strong>4.8 average rating</strong> from 1,200+ reviews
+            <p className="text-gray-700 italic mb-6">
+              "Udah langganan dari jaman maba sampe sekarang kerja masih sering balik kesini. Rasanya konsisten, pelayanannya cepet, dan tempatnya nyaman."
+            </p>
+            <p className="font-bold">Budi Santoso</p>
+            <p className="text-sm text-gray-500">Alumni Untar</p>
           </div>
+          {/* Review 3 */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg text-left relative">
+            <i className="fas fa-quote-left text-orange-200 text-6xl absolute top-6 left-6 opacity-50 -z-10"></i>
+            <div className="text-yellow-400 mb-4">
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+            </div>
+            <p className="text-gray-700 italic mb-6">
+              "Level pedasnya beneran nampol! Mie Yamin Level 5-nya mantap. Cocok buat yang suka tantangan. Tapi yang original juga nagih. Perfecto!"
+            </p>
+            <p className="font-bold">Dina Rahma</p>
+            <p className="text-sm text-gray-500">Food Blogger</p>
+          </div>
+        </div>
+        <div className="mt-12 flex justify-center items-center gap-2 text-lg text-gray-600">
+          <div className="text-yellow-400">
+            <i className="fas fa-star"></i>
+            <i className="fas fa-star"></i>
+            <i className="fas fa-star"></i>
+            <i className="fas fa-star"></i>
+            <i className="fas fa-star-half-alt"></i>
+          </div>
+          <strong>4.8 average rating</strong> from 1,200+ reviews
         </div>
       </div>
     </section>

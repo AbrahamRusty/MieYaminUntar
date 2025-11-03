@@ -1,48 +1,46 @@
 const VisionMission = () => {
   return (
-    <section id="vision" className="py-5 bg-light">
-      <div className="container">
-        <div className="row g-4">
-          {/* Vision Card */}
-          <div className="col-lg-6">
-            <div className="vision-card vision-orange">
-              <div className="decorative-circle"></div>
-              <div className="decorative-square"></div>
-              
-              <div className="position-relative">
-                <div className="icon-container icon-white">
-                  <i className="fas fa-bullseye fa-2x"></i>
-                </div>
-                <h3 className="h1 fw-bold mb-3">VISI</h3>
-                <p className="fs-5 mb-0">
-                  Menjadi merek mi kampus teratas yang menggabungkan cita rasa dan teknologi.
-                </p>
-              </div>
+    <section id="vision" className="py-24 bg-gray-50">
+      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8">
+        {/* Visi */}
+        <div className="bg-orange-500 text-white p-10 rounded-3xl shadow-lg relative overflow-hidden">
+          <div className="absolute -top-4 -left-4 w-24 h-24 bg-white/20 rounded-full"></div>
+          <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-white/20 rounded-3xl transform rotate-45"></div>
+
+          <div className="relative z-10">
+            <div className="bg-white/30 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+              <i className="fas fa-bullseye text-3xl text-white"></i>
             </div>
+            <h3 className="text-4xl font-bold mb-4">VISI</h3>
+            <p className="text-xl">
+              Menjadi merek mi kampus teratas yang menggabungkan cita rasa dan teknologi.
+            </p>
           </div>
-          
-          {/* Mission Card */}
-          <div className="col-lg-6">
-            <div className="vision-card vision-white">
-              <div className="icon-container icon-orange">
-                <i className="fas fa-check-circle fa-2x"></i>
-              </div>
-              <h3 className="h1 fw-bold mb-4 text-dark">MISI</h3>
-              <ul className="list-unstyled fs-5">
-                <li className="mb-3 d-flex align-items-start">
-                  <span className="text-warning me-3 mt-1">●</span>
-                  <span className="text-dark">Menyajikan bahan halal berkualitas tinggi</span>
-                </li>
-                <li className="mb-3 d-flex align-items-start">
-                  <span className="text-warning me-3 mt-1">●</span>
-                  <span className="text-dark">Menyajikan bahan halal berkualitas tinggi ...</span>
-                </li>
-                <li className="d-flex align-items-start">
-                  <span className="text-warning me-3 mt-1">●</span>
-                  <span className="text-dark">Bangun komunitas pelanggan yang setia dengan manfaat eksklusif</span>
-                </li>
-              </ul>
+        </div>
+        {/* Misi */}
+        <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-lg relative overflow-hidden">
+          <div className="absolute -top-4 -right-4 w-20 h-20 bg-orange-500/10 rounded-full"></div>
+          <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-orange-500/10 rounded-3xl transform rotate-45"></div>
+
+          <div className="relative z-10">
+            <div className="bg-orange-500/20 text-orange-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+              <i className="fas fa-check-circle text-3xl"></i>
             </div>
+            <h3 className="text-4xl font-bold mb-6 text-gray-900">MISI</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start text-xl">
+                <span className="text-orange-500 mr-3 mt-1">▪</span>
+                <span className="text-gray-700">Menyajikan bahan halal berkualitas tinggi</span>
+              </li>
+              <li className="flex items-start text-xl">
+                <span className="text-orange-500 mr-3 mt-1">▪</span>
+                <span className="text-gray-700">Menyajikan bahan halal berkualitas tinggi ...</span>
+              </li>
+              <li className="flex items-start text-xl">
+                <span className="text-orange-500 mr-3 mt-1">▪</span>
+                <span className="text-gray-700">Bangun komunitas pelanggan yang setia dengan manfaat eksklusif</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

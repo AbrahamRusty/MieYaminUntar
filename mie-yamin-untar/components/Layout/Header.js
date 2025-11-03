@@ -1,44 +1,24 @@
-import Link from 'next/link';
-
 const Header = () => {
   return (
-    <header className="sticky-top bg-white shadow-sm" style={{ backdropFilter: 'blur(10px)' }}>
-      <nav className="navbar navbar-expand-lg">
-        <div className="container">
-          <Link href="/" className="navbar-brand fw-bold fs-2 text-warning">
-            Mie Yamin Untar
-          </Link>
-          
-          <button 
-            className="navbar-toggler" 
-            type="button" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#navbarNav"
-          >
-            <span className="navbar-toggler-icon"></span>
+    <header className="sticky top-0 bg-white/80 backdrop-blur-sm shadow-sm z-40">
+      <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#" className="text-2xl font-bold text-orange-500">
+          Mie Yamin Untar
+        </a>
+        <div className="hidden md:flex items-center space-x-6">
+          <a href="#home" className="text-gray-600 hover:text-orange-500 transition-colors">Home</a>
+          <a href="#about" className="text-gray-600 hover:text-orange-500 transition-colors">About</a>
+          <a href="#menu" className="text-gray-600 hover:text-orange-500 transition-colors">Menu</a>
+          <a href="#contact" className="text-gray-600 hover:text-orange-500 transition-colors">Contact</a>
+          <a href="#" className="bg-orange-500 text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-orange-600 transition-all">
+            Join Loyalty
+          </a>
+        </div>
+        {/* Mobile Menu Button (opsional, bisa ditambahkan) */}
+        <div className="md:hidden">
+          <button className="text-gray-600 focus:outline-none">
+            <i className="fas fa-bars fa-lg"></i>
           </button>
-          
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-              <li className="nav-item">
-                <Link href="#home" className="nav-link text-dark fw-medium">Home</Link>
-              </li>
-              <li className="nav-item">
-                <Link href="#about" className="nav-link text-dark fw-medium">About</Link>
-              </li>
-              <li className="nav-item">
-                <Link href="#menu" className="nav-link text-dark fw-medium">Menu</Link>
-              </li>
-              <li className="nav-item">
-                <Link href="#contact" className="nav-link text-dark fw-medium">Contact</Link>
-              </li>
-              <li className="nav-item ms-3">
-                <Link href="#loyalty" className="btn btn-warning text-white fw-medium px-4 py-2 rounded-pill shadow">
-                  Join Loyalty
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
       </nav>
     </header>

@@ -1,50 +1,62 @@
-import SectionTag from '../UI/SectionTag';
-import MenuCard from '../UI/MenuCard';
-
 const BestSellers = () => {
-  const bestSellers = [
-    {
-      name: "Mie Yamin Complete",
-      price: "Rp25.000",
-      description: "Favorit utama dengan keseimbangan sempurna antara manis, gurih, dan pedas.",
-      image: "https://placehold.co/400x300/EAD9C8/333333?text=Mie+Yamin+Complete",
-      isPopular: true
-    },
-    {
-      name: "Mie Yamin Level 5",
-      price: "Rp20.000",
-      description: "Bagi mereka yang berani mencoba pedas ekstrem!",
-      image: "https://placehold.co/400x300/EAD9C8/333333?text=Mie+Yamin+Level+5",
-      isPopular: false
-    },
-    {
-      name: "Pangsit Goreng",
-      price: "Rp15.000",
-      description: "Pangsit goreng yang renyah saat di gigitan",
-      image: "https://placehold.co/400x300/EAD9C8/333333?text=Pangsit+Goreng",
-      isPopular: false
-    }
-  ];
-
   return (
-    <section id="best-sellers" className="py-5 bg-white">
-      <div className="container">
-        <div className="text-center mb-5">
-          <SectionTag variant="blue">
-            <i className="fas fa-trophy me-1"></i> Best Sellers
-          </SectionTag>
-          <h2 className="display-5 fw-bold mb-3">Hidangan Andalan Kami</h2>
-          <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
-            Hidangan-hidangan ini membuat pelanggan kami terus kembali untuk menikmatinya lagi
-          </p>
-        </div>
-        
-        <div className="row g-4">
-          {bestSellers.map((item, index) => (
-            <div key={index} className="col-lg-4 col-md-6">
-              <MenuCard {...item} />
+    <section id="best-sellers" className="py-24 bg-white">
+      <div className="container mx-auto px-6 text-center">
+        <span className="section-tag tag-blue">
+          <i className="fas fa-trophy text-xs mr-1"></i> Best Sellers
+        </span>
+        <h2 className="text-4xl font-bold mb-4">Hidangan Andalan Kami</h2>
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-16">
+          Hidangan-hidangan ini membuat pelanggan kami terus kembali untuk menikmatinya lagi
+        </p>
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Card 1 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+            <div className="relative">
+              <img src="https://placehold.co/400x300/EAD9C8/333333?text=Mie+Yamin+Complete" alt="Mie Yamin Complete" className="w-full h-64 object-cover" />
+              <span className="absolute top-4 left-4 bg-yellow-400 text-yellow-900 text-sm font-medium px-3 py-1 rounded-full">
+                <i className="fas fa-star text-xs mr-1"></i> Most Popular
+              </span>
             </div>
-          ))}
+            <div className="p-6 flex flex-col flex-grow">
+              <h3 className="text-2xl font-bold">Mie Yamin Complete</h3>
+              <p className="text-xl font-semibold text-orange-500 mb-4">Rp25.000</p>
+              <p className="text-gray-600 mb-6 flex-grow">
+                Favorit utama dengan keseimbangan sempurna antara manis, gurih, dan pedas.
+              </p>
+              <a href="#" className="mt-auto bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg shadow-md hover:bg-orange-600 transition-all text-center">
+                Order Now
+              </a>
+            </div>
+          </div>
+          {/* Card 2 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+            <img src="https://placehold.co/400x300/EAD9C8/333333?text=Mie+Yamin+Level+5" alt="Mie Yamin Level 5" className="w-full h-64 object-cover" />
+            <div className="p-6 flex flex-col flex-grow">
+              <h3 className="text-2xl font-bold">Mie Yamin Level 5</h3>
+              <p className="text-xl font-semibold text-orange-500 mb-4">Rp20.000</p>
+              <p className="text-gray-600 mb-6 flex-grow">
+                Bagi mereka yang berani mencoba pedas ekstrem!
+              </p>
+              <a href="#" className="mt-auto bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg shadow-md hover:bg-orange-600 transition-all text-center">
+                Order Now
+              </a>
+            </div>
+          </div>
+          {/* Card 3 */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+            <img src="https://placehold.co/400x300/EAD9C8/333333?text=Pansit+Goreng" alt="Pansit Goreng" className="w-full h-64 object-cover" />
+            <div className="p-6 flex flex-col flex-grow">
+              <h3 className="text-2xl font-bold">Pansit goreng</h3>
+              <p className="text-xl font-semibold text-orange-500 mb-4">Rp15.000</p>
+              <p className="text-gray-600 mb-6 flex-grow">
+                Pangsit goreng yang renyah saat di gigitan
+              </p>
+              <a href="#" className="mt-auto bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg shadow-md hover:bg-orange-600 transition-all text-center">
+                Order Now
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,585 @@
+/* Menggunakan font Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Gradient untuk hero section */
+.hero-gradient {
+    background: linear-gradient(135deg, #FFF8F5 0%, #FFF2EB 100%);
+}
+
+/* Style untuk tag kecil di atas judul section */
+/* Ini adalah konversi manual dari kelas @apply Tailwind */
+.section-tag {
+    display: inline-block;
+    font-size: 0.875rem; /* text-sm */
+    line-height: 1.25rem;
+    font-weight: 500; /* font-medium */
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem;
+    padding-top: 0.25rem; /* py-1 */
+    padding-bottom: 0.25rem;
+    border-radius: 9999px; /* rounded-full */
+    margin-bottom: 0.75rem; /* mb-3 */
+}
+
+.tag-orange {
+    background-color: #FFF7ED; /* bg-orange-100 */
+    color: #EA580C; /* text-orange-600 */
+}
+
+.tag-pink {
+    background-color: #FFF1F2; /* bg-pink-100 */
+    color: #DB2777; /* text-pink-600 */
+}
+
+.tag-blue {
+    background-color: #EFF6FF; /* bg-blue-100 */
+    color: #2563EB; /* text-blue-600 */
+}
+
+/* Buttons */
+.btn-custom {
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-orange {
+    background: #ea580c;
+    color: white;
+}
+
+.btn-orange:hover {
+    background: #c2410c;
+}
+
+.btn-green {
+    background: #22c55e;
+    color: white;
+}
+
+.btn-green:hover {
+    background: #16a34a;
+}
+
+/* Stats */
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ea580c;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+/* Vision Mission */
+.vision-card {
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.vision-orange {
+    background: #ea580c;
+    color: white;
+}
+
+.vision-white {
+    background: white;
+    border: 1px solid #e5e7eb;
+}
+
+.decorative-circle {
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.vision-orange .decorative-circle {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.vision-white .decorative-circle {
+    background: #ea580c;
+    opacity: 0.1;
+}
+
+.decorative-square {
+    position: absolute;
+    bottom: -2rem;
+    right: -2rem;
+    width: 8rem;
+    height: 8rem;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(45deg);
+}
+
+.vision-orange .decorative-square {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.vision-white .decorative-square {
+    background: #ea580c;
+    opacity: 0.1;
+}
+
+.icon-container {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-white {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.icon-orange {
+    background: rgba(234, 88, 12, 0.2);
+    color: #ea580c;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.most-popular {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: #fbbf24;
+    color: #92400e;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+}
+
+.card-flex {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-flex-grow {
+    flex-grow: 1;
+}
+
+.card-flex-grow-0 {
+    flex-shrink: 0;
+}
+
+.btn-order {
+    background: #ea580c;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 800;
+    font-size: 1.125rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-order:hover {
+    background: #c2410c;
+}
+
+/* Menu Items */
+.menu-item {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.description {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+}
+
+.price {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #ea580c;
+}
+
+/* Reviews */
+.review-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    position: relative;
+}
+
+.quote-icon {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-size: 3.75rem;
+    color: #fed7aa;
+    opacity: 0.5;
+    z-index: -10;
+}
+
+.stars {
+    color: #fbbf24;
+    margin-bottom: 1rem;
+}
+
+.quote {
+    color: #374151;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.author {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.role {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.rating-stars {
+    color: #fbbf24;
+}
+
+/* Contact */
+.contact-card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.contact-orange {
+    background: white;
+}
+
+.contact-green {
+    background: #22c55e;
+    color: white;
+}
+
+.contact-purple {
+    background: #7c3aed;
+    color: white;
+}
+
+.map-container {
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 31.25rem;
+}
+
+@media (min-width: 1024px) {
+    .map-container {
+        height: 31.25rem;
+    }
+}
+
+/* Header */
+.header {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    z-index: 40;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ea580c;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: none;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: #4b5563;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ea580c;
+}
+
+.loyalty-btn {
+    background: #ea580c;
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.loyalty-btn:hover {
+    background: #c2410c;
+}
+
+.mobile-menu {
+    display: block;
+}
+
+.menu-btn {
+    color: #4b5563;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+    }
+    .mobile-menu {
+        display: none;
+    }
+}
+
+/* Footer */
+.footer {
+    background: #1e293b;
+    color: #cbd5e1;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.footer-description {
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #374151;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.social-icon:hover {
+    background: #ea580c;
+}
+
+.footer-subtitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.footer-link {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #f97316;
+}
+
+.contact-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+}
+
+.contact-icon {
+    color: #f97316;
+    margin-top: 0.25rem;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+.hours-table {
+    width: 100%;
+    text-align: left;
+}
+
+.table-row {
+    border-bottom: 1px solid #374151;
+}
+
+.table-cell {
+    padding: 0.5rem 0;
+}
+
+.time {
+    font-weight: 500;
+    color: white;
+}
+
+.closed {
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.footer-divider {
+    border: none;
+    border-top: 1px solid #374151;
+    margin: 0;
+}
+
+.footer-bottom {
+    text-align: center;
+    color: #94a3b8;
+    margin-top: 2rem;
+}
+
+.heart-icon {
+    color: #ef4444;
+}
+
+@media (min-width: 768px) {
+    .footer-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+    }
+}
+
+/* Floating WhatsApp */
+.whatsapp-float {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: #22c55e;
+    color: white;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
