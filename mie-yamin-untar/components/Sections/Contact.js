@@ -1,3 +1,5 @@
+'use client';
+
 import SectionTag from '../UI/SectionTag';
 
 const Contact = () => {
