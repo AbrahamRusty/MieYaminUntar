@@ -507,3 +507,240 @@ body {
   height: auto;
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
 }
+/* --- HAPUS/GANTI STYLE PRICING LAMA DENGAN INI --- */
+
+/* Latar belakang section sekarang putih bersih */
+.pricing-section {
+  background-color: #fff; 
+  padding: 5rem 0;
+}
+
+/* 1. Style Toggle (tetap sama) */
+.pricing-toggle-group {
+  background-color: #F1F5F9;
+  padding: 0.5rem;
+  border-radius: 50px;
+  display: inline-flex;
+  margin-bottom: 2.5rem;
+}
+.pricing-toggle-btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  border: none;
+  background: transparent;
+  color: var(--color-gray);
+  font-weight: 600;
+}
+.pricing-toggle-btn.active {
+  background-color: #fff;
+  color: var(--color-dark);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 2. Style Kartu Harga (Diperbarui) */
+.pricing-card {
+  border: 1px solid #E2E8F0;
+  border-radius: 1.5rem; /* Lebih bulat (24px) */
+  padding: 2rem;
+  background: #fff;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.07); /* Bayangan baru yang lebih soft */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 480px; /* Dibuat lebih tinggi */
+}
+
+.pricing-card .card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+/* 3. Style Harga (Diperbarui) */
+.pricing-card-price {
+  font-size: 2.75rem; /* 44px */
+  font-weight: 800;
+  color: var(--color-dark);
+  margin-top: 1rem;
+  margin-bottom: 0.25rem; /* Didekatkan */
+}
+/* Untuk '/ Bln' yang inline */
+.pricing-card-price span.period {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-gray);
+}
+/* Untuk 'Bln' yang di baris baru */
+.pricing-card-price span.period-block {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-gray);
+  margin-top: -0.5rem; /* Tarik ke atas agar lebih dekat */
+}
+
+/* 4. Style Daftar Fitur (tetap sama) */
+.pricing-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 1.5rem 0 2rem 0;
+  flex-grow: 1; /* Mendorong tombol ke bawah */
+}
+.pricing-list li {
+  color: var(--color-gray);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+.pricing-list li::before {
+  content: '•';
+  color: var(--color-primary); /* Titik oranye */
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+  line-height: 1;
+}
+
+/* 5. Style Kartu "Featured" (Diperbarui) */
+.pricing-card.featured {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 40px rgba(255, 87, 34, 0.3);
+  /* transform: scale(1.03); <-- Dihapus */
+  z-index: 2;
+  border-radius: 1.5rem; /* Pastikan ini juga bulat */
+  min-height: 540px; /* Dibuat JAUH LEBIH TINGGI */
+}
+
+/* Teks putih di kartu featured */
+.pricing-card.featured .card-title,
+.pricing-card.featured .pricing-card-price,
+.pricing-card.featured .pricing-list li {
+  color: white;
+}
+.pricing-card.featured .pricing-card-price span.period,
+.pricing-card.featured .pricing-card-price span.period-block {
+  color: rgba(255, 255, 255, 0.8);
+}
+.pricing-card.featured .pricing-list li::before {
+  color: white;
+}
+
+/* 6. Style Tombol (Diperbarui) */
+
+/* HAPUS .btn-brand-white */
+
+/* Tambahkan style untuk tombol teks di kartu featured */
+.btn-featured-text {
+  background: none;
+  border: none;
+  padding: 0.5rem 0; /* Beri sedikit area klik */
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: auto; /* Otomatis mendorong ke bawah */
+  text-align: center;
+  transition: opacity 0.2s ease;
+  width: 100%;
+}
+.btn-featured-text:hover {
+  opacity: 0.8;
+}
+
+/* Pastikan tombol oranye lebar penuh */
+.pricing-card .btn-brand-primary {
+  width: 100%;
+}
+/* --- Tambahkan di akhir app/globals.css --- */
+
+/* 1. Wrapper Section Utama */
+.loyalty-section {
+  background-color: var(--color-primary); /* Latar oranye */
+  color: #fff; /* Teks default putih */
+  padding: 5rem 0;
+  overflow: hidden; /* Mencegah form-card 'kabur' di mobile */
+}
+
+/* 2. Badge "Loyalty Program" */
+.loyalty-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2); /* Putih transparan */
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* 3. Kartu Benefit (Kiri) */
+.benefit-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1); /* Oranye lebih transparan */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Border putih transparan */
+  padding: 1.25rem;
+  border-radius: 1rem; /* 16px */
+  margin-bottom: 1rem;
+}
+.benefit-icon-wrapper {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background: #fff;
+  color: var(--color-primary); /* Ikon oranye */
+  border-radius: 0.75rem; /* 12px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+.benefit-card h6 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+/* 4. Form Card (Kanan) */
+.form-card {
+  background: #fff;
+  color: var(--color-dark); /* Teks di dalam kartu ini jadi gelap */
+  border-radius: 1.5rem; /* 24px */
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* Style Input Kustom */
+.form-card-input {
+  background-color: #F8FAFC !important; /* Abu-abu sangat muda */
+  border: 1px solid #F8FAFC !important;
+  border-radius: 0.75rem !important; /* 12px */
+  padding: 0.75rem 1rem !important;
+  font-size: 0.9rem !important;
+}
+.form-card-input:focus {
+  background-color: #fff !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: none !important;
+}
+.form-card .form-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+/* 5. Link di Bawah Form */
+.form-footer-link {
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--color-gray);
+}
+.form-footer-link a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.form-disclaimer {
+  font-size: 0.8rem;
+  text-align: center;
+  color: #adb5bd; /* Abu-abu lebih muda */
+}

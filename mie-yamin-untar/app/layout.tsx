@@ -8,6 +8,7 @@ import { Inter } from 'next/font/google';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import FloatingWhatsApp from '@/components/Layout/FloatingChat';
+import { AnimatePresence } from 'framer-motion';
 
 const inter = Inter({ subsets: ['latin'] }); // Next.js default, bisa dihapus jika hanya pakai Poppins
 
@@ -25,7 +26,11 @@ export default function RootLayout({
     <html lang="id">
       <body>
         <Header />
-        <main>{children}</main>
+        <div style={{ paddingTop: '80px' }}>
+          <AnimatePresence mode="wait">
+            <main>{children}</main>
+          </AnimatePresence>
+        </div>
         <FloatingWhatsApp />
         <Footer />
       </body>

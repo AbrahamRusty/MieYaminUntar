@@ -7,6 +7,7 @@ import FullMenu from '@/components/Sections/FullMenu';
 import Reviews from '@/components/Sections/Reviews';
 import Contact from '@/components/Sections/Contact';
 import SplashScreen from '@/components/UI/SplashScreen';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
@@ -30,13 +31,18 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5 }}
+    >
       {showSplash && <SplashScreen isFading={isFading} />}
       <Hero />
       <VisionMission />
       <FullMenu />
       <Reviews />
       <Contact />
-    </>
+    </motion.div>
   );
 }

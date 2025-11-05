@@ -7,7 +7,7 @@ export default function MenuItemCard({ title, description, price, imageUrl }) {
   return (
     <Card className="shadow-sm border-0 h-100">
           <Image
-            src="/next.svg" // Placeholder image
+            src={imageUrl || "/next.svg"} // Use imageUrl prop or placeholder
             alt={title}
             width={300}
             height={250}
