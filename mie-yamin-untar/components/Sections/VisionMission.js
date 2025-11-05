@@ -1,51 +1,116 @@
-const VisionMission = () => {
-  return (
-    <section id="vision" className="py-24 bg-gray-50">
-      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8">
-        {/* Visi */}
-        <div className="bg-orange-500 text-white p-10 rounded-3xl shadow-lg relative overflow-hidden">
-          <div className="absolute -top-4 -left-4 w-24 h-24 bg-white/20 rounded-full"></div>
-          <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-white/20 rounded-3xl transform rotate-45"></div>
+'use client';
 
-          <div className="relative z-10">
-            <div className="bg-white/30 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
-              <i className="fas fa-bullseye text-3xl text-white"></i>
-            </div>
-            <h3 className="text-4xl font-bold mb-4">VISI</h3>
-            <p className="text-xl">
-              Menjadi merek mi kampus teratas yang menggabungkan cita rasa dan teknologi.
+import { Container, Row, Col } from 'react-bootstrap';
+import Image from 'next/image';
+import { BsBullseye, BsCheck2Circle, BsFillStopFill } from 'react-icons/bs';
+
+export default function VisionMission() {
+  return (
+    <Container as="section" className="py-5 my-4" id="about">
+      {/* 1. HEADER (Tag, Judul, Subjudul) */}
+      <Row className="justify-content-center text-center mb-5">
+        <Col xs="auto">
+          {/* Badge kustom 'Our Story' */}
+          <div className="soft-badge">Our Story</div>
+        </Col>
+        <Col xs={12}>
+          <h2 className="section-title mt-3">About Mie Yamin Untar</h2>
+        </Col>
+        <Col lg={7}>
+          <p className="text-muted fs-5">
+            Dari gerobak makanan sederhana menjadi merek kampus yang dicintai
+          </p>
+        </Col>
+      </Row>
+
+      {/* 2. KONTEN UTAMA (Gambar + Teks + Statistik) */}
+      <Row className="align-items-center gy-4">
+        {/* Kolom Gambar */}
+        <Col lg={6}>
+          <Image
+            src="/gerobak.jpg" // Ganti dengan path gambar Anda di /public
+            alt="Gerobak Mie Yamin Untar"
+            width={500}
+            height={600}
+            className="img-fluid rounded-4 shadow"
+            style={{ objectFit: 'cover', width: '100%', maxHeight: '550px' }}
+          />
+        </Col>
+
+        {/* Kolom Teks + Statistik */}
+        <Col lg={6}>
+          <p className="text-muted" style={{ fontSize: '1.1rem' }}>
+            Sejak dibuka dekat Universitas Tarumanagara, Mie Yamin Untar telah
+            menjadi favorit bagi mahasiswa dan warga lokal yang mencari rasa
+            hangat dan menghibur.
+          </p>
+          <p className="text-muted" style={{ fontSize: '1.1rem' }}>
+            Bermula dari gerobak makanan kecil, kami telah berkembang menjadi
+            merek modern yang menggabungkan resep tradisional dan kemudahan
+            digital. Komitmen kami terhadap kualitas dan rasa tetap tidak
+            berubah.
+          </p>
+
+          {/* Baris Statistik */}
+          <Row className="mt-4 pt-2 text-center">
+            <Col xs={4}>
+              <h1 className="fw-bold text-brand-primary mb-0">5+</h1>
+              <span className="text-muted">Tahun</span>
+            </Col>
+            <Col xs={4}>
+              <h1 className="fw-bold text-brand-primary mb-0">50+</h1>
+              <span className="text-muted">Order Per Hari</span>
+            </Col>
+            <Col xs={4}>
+              <h1 className="fw-bold text-brand-primary mb-0">100%</h1>
+              <span className="text-muted">Halal</span>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+
+      {/* 3. KARTU VISI & MISI */}
+      <Row className="mt-5 pt-4 gy-4">
+        {/* Kartu Visi */}
+        <Col lg={6}>
+          <div
+            className="rounded-4 p-4 p-lg-5 h-100"
+            style={{ backgroundColor: 'var(--color-primary)', color: 'white' }}
+          >
+            <BsBullseye className="fs-1 mb-3" />
+            <h3 className="fw-bold">VISI</h3>
+            <p className="fs-5">
+              Menjadi merek mi kampus teratas yang menggabungkan cita rasa dan
+              teknologi.
             </p>
           </div>
-        </div>
-        {/* Misi */}
-        <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-lg relative overflow-hidden">
-          <div className="absolute -top-4 -right-4 w-20 h-20 bg-orange-500/10 rounded-full"></div>
-          <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-orange-500/10 rounded-3xl transform rotate-45"></div>
+        </Col>
 
-          <div className="relative z-10">
-            <div className="bg-orange-500/20 text-orange-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
-              <i className="fas fa-check-circle text-3xl"></i>
-            </div>
-            <h3 className="text-4xl font-bold mb-6 text-gray-900">MISI</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start text-xl">
-                <span className="text-orange-500 mr-3 mt-1">▪</span>
-                <span className="text-gray-700">Menyajikan bahan halal berkualitas tinggi</span>
+        {/* Kartu Misi */}
+        <Col lg={6}>
+          <div className="bg-white shadow-sm rounded-4 p-4 p-lg-5 h-100 border">
+            <BsCheck2Circle
+              className="fs-1 mb-3"
+              style={{ color: 'var(--color-primary)' }}
+            />
+            <h3 className="fw-bold">MISI</h3>
+            <ul className="misi-list mt-3 fs-5">
+              <li>
+                <BsFillStopFill className="misi-list-icon" />
+                Menyajikan bahan halal berkualitas tinggi
               </li>
-              <li className="flex items-start text-xl">
-                <span className="text-orange-500 mr-3 mt-1">▪</span>
-                <span className="text-gray-700">Menyajikan bahan halal berkualitas tinggi ...</span>
+              <li>
+                <BsFillStopFill className="misi-list-icon" />
+                Menyajikan bahan halal berkualitas tinggi ...
               </li>
-              <li className="flex items-start text-xl">
-                <span className="text-orange-500 mr-3 mt-1">▪</span>
-                <span className="text-gray-700">Bangun komunitas pelanggan yang setia dengan manfaat eksklusif</span>
+              <li>
+                <BsFillStopFill className="misi-list-icon" />
+                Bangun komunitas pelanggan yang setia dengan manfaat eksklusif
               </li>
             </ul>
           </div>
-        </div>
-      </div>
-    </section>
+        </Col>
+      </Row>
+    </Container>
   );
-};
-
-export default VisionMission;
+}

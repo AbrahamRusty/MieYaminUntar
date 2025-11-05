@@ -1,28 +1,41 @@
-const Header = () => {
-  return (
-    <header className="sticky top-0 bg-white/80 backdrop-blur-sm shadow-sm z-40">
-      <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#" className="text-2xl font-bold text-orange-500">
-          Mie Yamin Untar
-        </a>
-        <div className="hidden md:flex items-center space-x-6">
-          <a href="#home" className="text-gray-600 hover:text-orange-500 transition-colors">Home</a>
-          <a href="#about" className="text-gray-600 hover:text-orange-500 transition-colors">About</a>
-          <a href="#menu" className="text-gray-600 hover:text-orange-500 transition-colors">Menu</a>
-          <a href="#contact" className="text-gray-600 hover:text-orange-500 transition-colors">Contact</a>
-          <a href="#" className="bg-orange-500 text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-orange-600 transition-all">
-            Join Loyalty
-          </a>
-        </div>
-        {/* Mobile Menu Button (opsional, bisa ditambahkan) */}
-        <div className="md:hidden">
-          <button className="text-gray-600 focus:outline-none">
-            <i className="fas fa-bars fa-lg"></i>
-          </button>
-        </div>
-      </nav>
-    </header>
-  );
-};
+'use client';
 
-export default Header;
+// 1. Impor Button
+import { Container, Nav, Navbar, Button } from 'react-bootstrap';
+
+export default function Header() {
+  return (
+    <Navbar bg="white" expand="lg" className="py-3 shadow-sm">
+      <Container>
+        {/* 2. Logo Teks dibuat Oranye */}
+        <Navbar.Brand
+          href="#home"
+          className="fw-bold fs-4 text-brand-primary"
+        >
+          Mie Yamin Untar
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto align-items-center">
+            <Nav.Link href="#home" className="nav-link-dark me-2">
+              Home
+            </Nav.Link>
+            <Nav.Link href="#about" className="nav-link-dark me-2">
+              About
+            </Nav.Link>
+            <Nav.Link href="#menu" className="nav-link-dark me-2">
+              Menu
+            </Nav.Link>
+            <Nav.Link href="#contact" className="nav-link-dark me-3">
+              Contact
+            </Nav.Link>
+            {/* 3. Tombol "HI Andrew" diganti "Join Loyalty" */}
+            <Button variant="" className="btn-brand-primary ms-3">
+              Join Loyalty
+            </Button>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
