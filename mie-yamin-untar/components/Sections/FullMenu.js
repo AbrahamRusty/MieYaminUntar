@@ -1,7 +1,9 @@
 'use client';
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { useRouter } from 'next/navigation';
 import MenuItemCard from '../UI/MenuCard'; // Impor kartu baru kita
+import MenuGridCard from '../UI/MenuGridCard'; // Menggunakan kartu Anda
 
 // Data untuk menu, Anda bisa ganti ini dari database nanti
 const menuItems = [
@@ -9,42 +11,47 @@ const menuItems = [
     title: 'Mie Yamin Original',
     description: 'Mie klasik dengan ayam kecap manis',
     price: 'Rp18.000',
-    imageUrl: '/menu/mie-yamin-original.jpg', // Ganti path gambar
+    imageUrl: '/menu/mie-original.png', // Ganti path gambar
   },
   {
     title: 'Mie Yamin Level 5',
     description: 'Pedas dan penuh rasa bagi para pecinta rempah',
     price: 'Rp20.000',
-    imageUrl: '/menu/mie-yamin-level5.jpg', // Ganti path gambar
+    imageUrl: '/menu/mie-level-5.png', // Ganti path gambar
   },
   {
     title: 'Mie Yamin Complete',
     description: 'Includes chicken, dumplings, meatballs, and sambal',
     price: 'Rp25.000',
-    imageUrl: '/menu/mie-yamin-complete.jpg', // Ganti path gambar
+    imageUrl: '/menu/mie-complete.png', // Ganti path gambar
   },
   {
     title: 'Pangsit Goreng (5 pcs)',
     description: 'Renyah dan gurih',
     price: 'Rp10.000',
-    imageUrl: '/menu/pangsit-goreng.jpg', // Ganti path gambar
+    imageUrl: '/menu/pangsit-goreng.png', // Ganti path gambar
   },
   {
     title: 'Es Teh',
     description: 'Teman minum yang sempurna',
     price: 'Rp5.000',
-    imageUrl: '/menu/es-teh.jpg', // Ganti path gambar
+    imageUrl: '/menu/es-teh.png', // Ganti path gambar
   },
   {
     title: 'Menu Lain',
     description: 'Deskripsi menu lain',
     price: 'Rp15.000',
-    imageUrl: '/menu/default.jpg', // Ganti path gambar
+    imageUrl: '/menu/default.png', // Ganti path gambar
   },
 ];
 
-
 export default function FullMenu() {
+  const router = useRouter();
+
+  const handleSeeMore = () => {
+    router.push('/all-menu');
+  };
+
   return (
     <Container as="section" className="py-5 my-4" id="menu">
       {/* 1. HEADER (Tag, Judul, Subjudul) */}
@@ -80,7 +87,7 @@ export default function FullMenu() {
       {/* 3. TOMBOL "SEE MORE" */}
       <Row className="mt-5 pt-3">
         <Col className="text-center">
-          <Button variant="" className="btn-brand-primary btn-lg px-5">
+          <Button variant="" className="btn-brand-primary btn-lg px-5" onClick={handleSeeMore}>
             See more
           </Button>
         </Col>

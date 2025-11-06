@@ -28,7 +28,7 @@ export default function VisionMission() {
         {/* Kolom Gambar */}
         <Col lg={6}>
           <Image
-            src="/gerobak.jpg" // Ganti dengan path gambar Anda di /public
+            src="/about.jpg" // Ganti dengan path gambar Anda di /public
             alt="Gerobak Mie Yamin Untar"
             width={500}
             height={600}

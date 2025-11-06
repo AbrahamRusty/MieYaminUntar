@@ -744,3 +744,196 @@ body {
   text-align: center;
   color: #adb5bd; /* Abu-abu lebih muda */
 }
+/* --- Tambahkan di akhir app/globals.css --- */
+
+/* Latar belakang untuk section menu baru */
+.menu-page-section {
+  background-color: #F8FAFC; /* Abu-abu sangat muda */
+  padding: 4rem 0;
+}
+
+/* 1. Sidebar Kategori */
+.menu-sidebar .list-group-item {
+  background: none;
+  border: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--color-gray);
+  border-radius: 0.5rem; /* 8px */
+  margin-bottom: 0.5rem;
+}
+.menu-sidebar .list-group-item.active {
+  background-color: #F1F5F9; /* Abu-abu muda untuk yg aktif */
+  color: var(--color-dark);
+  font-weight: 700;
+}
+.menu-sidebar .list-group-item:hover {
+  background-color: #F1F5F9;
+}
+
+/* 2. Search Bar */
+.menu-search-bar .input-group-text {
+  background-color: #fff;
+  border-right: none;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border: 1px solid #E2E8F0;
+  padding-left: 1rem;
+}
+.menu-search-bar .form-control {
+  border-left: none;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border: 1px solid #E2E8F0;
+  padding: 0.75rem 1rem;
+}
+.menu-search-bar .form-control:focus {
+  box-shadow: none;
+  border-color: var(--color-primary);
+}
+
+/* 3. Filter Chips */
+.filter-chip-group {
+  display: flex;
+  flex-wrap: wrap; /* Agar responsif di mobile */
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+.filter-chip {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  border: 1px solid #E2E8F0;
+  color: var(--color-gray);
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: #fff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+.filter-chip.active {
+  background-color: var(--color-dark); /* Hitam/Dark */
+  color: #fff;
+  border-color: var(--color-dark);
+}
+.filter-chip:hover {
+  background-color: #F1F5F9;
+}
+
+/* 4. Kartu Menu Baru */
+.menu-grid-card {
+  background: #fff;
+  border-radius: 1rem; /* 16px */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  border: none;
+  height: 100%;
+}
+.menu-grid-card .card-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary); /* Oranye */
+  margin-bottom: 1rem;
+}
+.menu-grid-card .btn-brand-secondary {
+  width: 100%;
+}
+/* --- GANTI SEMUA CSS MENU LAMA ANDA DENGAN INI --- */
+
+/* 1. Latar Belakang & Layout Halaman Menu */
+.menu-section {
+  background-color: #F8FAFC; /* Latar abu-abu muda */
+  border-top: 1px solid #E5E7EB;
+  padding: 3rem 0; /* Padding atas & bawah */
+}
+
+/* 2. Sidebar Kiri (Lebih Menarik) */
+.menu-sidebar {
+  position: sticky; /* Nempel saat di-scroll */
+  top: 100px; /* Sesuaikan (tinggi header + 20px) */
+  padding-right: 1.5rem;
+}
+.menu-sidebar-list {
+  list-style: none;
+  padding-left: 0;
+}
+.menu-sidebar-list li a {
+  display: block;
+  padding: 0.8rem 1.25rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--color-gray);
+  text-decoration: none;
+  border-radius: 12px; /* Dibuat bulat */
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+/* EFEK HOVER & ACTIVE (Permintaan #1 & #3) */
+.menu-sidebar-list li a:hover,
+.menu-sidebar-list li a.active {
+  background-color: #fff; /* Latar putih */
+  color: var(--color-primary); /* Teks Oranye */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* 3. Konten Kanan */
+.menu-content {
+  padding-left: 1.5rem;
+}
+
+/* 4. Search Bar (Permintaan #3) */
+.menu-search-bar .input-group-text {
+  background-color: #fff;
+  border-right: none;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border: 1px solid #E2E8F0;
+  padding-left: 1rem;
+}
+.menu-search-bar .form-control {
+  border-left: none;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border: 1px solid #E2E8F0;
+  padding: 0.75rem 1rem;
+}
+.menu-search-bar .form-control:focus {
+  box-shadow: none;
+  border-color: var(--color-primary);
+}
+
+/* 5. Judul Grup (Kotak Hitam) */
+.menu-group-title-box {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: capitalize;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+}
+
+/* 6. Kartu Menu */
+.menu-grid-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  border: none;
+  height: 100%; /* Penting untuk baris yang tidak rata */
+}
+.menu-grid-card .card-img-top {
+  background-color: #E5E7EB; /* Placeholder jika gambar tdk ada */
+  min-height: 250px;
+}
+.menu-grid-card .card-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+.menu-grid-card .btn-brand-secondary {
+  width: 100%;
+}

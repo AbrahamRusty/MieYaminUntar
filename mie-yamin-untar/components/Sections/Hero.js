@@ -69,7 +69,7 @@ export default function Hero() {
         {/* Kolom Kanan: Gambar (tetap sama) */}
         <Col lg={6}>
           <Image
-            src="/mie-yamin-hero-baru.jpg" // Ganti dengan path gambar mie Anda
+            src="/mie-yamin-hero-baru.png" // Ganti dengan path gambar mie Anda
             alt="Mie Yamin Lezat"
             width={600}
             height={600}
