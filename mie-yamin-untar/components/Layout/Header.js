@@ -49,6 +49,7 @@ export default function Header() {
               Contact
             </Nav.Link>
             {/* 3. Tombol "HI Andrew" diganti "Join Loyalty" */}
+            {/* 3. Tombol "HI Andrew" diganti "Join Loyalty" */}
             {!isPricingPage && (
               <Link href="/pricing" passHref>
                 <Button variant="" className="btn-brand-primary ms-3">

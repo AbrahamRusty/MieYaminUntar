@@ -95,7 +95,7 @@ export default function Loyalty() {
               </Form>
 
               <p className="form-footer-link mt-4">
-                Already have an account? <a href="#">Login here</a>
+                Don't have an account? <a href="/register">Register here</a>
               </p>
               <p className="form-disclaimer mt-3">
                 By registering, you agree to our Terms & Conditions
