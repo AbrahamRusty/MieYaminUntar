@@ -71,7 +71,7 @@ export default function Pricing() {
 
                 {/* --- HARGA DIPERBARUI --- */}
                 <div className="pricing-card-price">
-                  $50.000 <span className="period">/ Bln</span>
+                  Rp50.000 <span className="period">/ Bln</span>
                 </div>
 
                 <ul className="pricing-list">

@@ -72,7 +72,7 @@ export default function Loyalty() {
                   <Form.Label>WhatsApp Number</Form.Label>
                   <Form.Control
                     type="tel"
-                    placeholder="0812-3456-7890"
+                    placeholder="+62-"
                     className="form-card-input"
                   />
                 </Form.Group>
@@ -81,7 +81,7 @@ export default function Loyalty() {
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
-                    placeholder="Enter your password"
+                    placeholder="******"
                     className="form-card-input"
                   />
                 </Form.Group>
@@ -90,7 +90,7 @@ export default function Loyalty() {
                   variant=""
                   className="btn-brand-primary w-100 btn-lg mt-3"
                 >
-                  Register Now
+                  Login Here
                 </Button>
               </Form>
 
