@@ -8,7 +8,7 @@ const About = () => {
           Dari gerobak makanan sederhana menjadi merek kampus yang dicintai
         </p>
         <div className="grid md:grid-cols-2 gap-12 items-center text-left">
-          <img src="https://placehold.co/500x600/E0E0E0/333333?text=Gerobak+Mie+Yamin+Jadul" alt="Gerobak Mie Yamin Untar" className="rounded-3xl shadow-xl w-full object-cover" />
+          <img src="/about.jpg" alt="Gerobak Mie Yamin Untar" className="rounded-3xl shadow-xl w-full object-cover" />
           <div>
             <h3 className="text-3xl font-semibold mb-6">
               Sejak dibuka dekat Universitas Tarumanagara, Mie Yamin Untar telah menjadi favorit bagi mahasiswa dan warga lokal yang mencari rasa hangat dan menghibur.

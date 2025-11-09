@@ -1,39 +1,38 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css';
+import '../styles/custom.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
+// Impor komponen layout Anda
+import Header from '@/components/Layout/Header';
+import Footer from '@/components/Layout/Footer';
+import FloatingWhatsApp from '@/components/Layout/FloatingChat';
+import { AnimatePresence } from 'framer-motion';
+
+const inter = Inter({ subsets: ['latin'] }); // Next.js default, bisa dihapus jika hanya pakai Poppins
 
 export const metadata: Metadata = {
-  title: "Mie Yamin Untar - Campus Favorite Since 2018",
-  description: "Mie autentik yang dibuat dengan bahan segar, topping yang melimpah, dan resep yang selalu berhasil. Setiap gigitan mengembalikan kenangan.",
+  title: 'Mie Yamin Untar - Campus Taste, Endless Flavor',
+  description: 'Mie Yamin paling enak se-Untar!',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <Head>
-        <link 
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
-          rel="stylesheet" 
-        />
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" 
-          rel="stylesheet" 
-        />
-      </Head>
-      <body className={`${inter.variable} antialiased`}>
-        {children}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <html lang="id">
+      <body>
+        <Header />
+        <div style={{ paddingTop: '80px' }}>
+          <AnimatePresence mode="wait">
+            <main>{children}</main>
+          </AnimatePresence>
+        </div>
+        <FloatingWhatsApp />
+        <Footer />
       </body>
     </html>
   );

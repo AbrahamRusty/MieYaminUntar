@@ -1,28 +1,64 @@
-const Header = () => {
-  return (
-    <header className="sticky top-0 bg-white/80 backdrop-blur-sm shadow-sm z-40">
-      <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#" className="text-2xl font-bold text-orange-500">
-          Mie Yamin Untar
-        </a>
-        <div className="hidden md:flex items-center space-x-6">
-          <a href="#home" className="text-gray-600 hover:text-orange-500 transition-colors">Home</a>
-          <a href="#about" className="text-gray-600 hover:text-orange-500 transition-colors">About</a>
-          <a href="#menu" className="text-gray-600 hover:text-orange-500 transition-colors">Menu</a>
-          <a href="#contact" className="text-gray-600 hover:text-orange-500 transition-colors">Contact</a>
-          <a href="#" className="bg-orange-500 text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-orange-600 transition-all">
-            Join Loyalty
-          </a>
-        </div>
-        {/* Mobile Menu Button (opsional, bisa ditambahkan) */}
-        <div className="md:hidden">
-          <button className="text-gray-600 focus:outline-none">
-            <i className="fas fa-bars fa-lg"></i>
-          </button>
-        </div>
-      </nav>
-    </header>
-  );
-};
+'use client';
 
-export default Header;
+// 1. Impor Button
+import { Container, Nav, Navbar, Button } from 'react-bootstrap';
+import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
+
+export default function Header() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleNavClick = (hash) => {
+    if (pathname !== '/') {
+      router.push(`/${hash}`);
+    } else {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const isPricingPage = pathname === '/pricing';
+
+  return (
+    <Navbar bg="white" expand="lg" className="py-3 shadow-sm fixed-top">
+      <Container>
+        {/* 2. Logo Teks dibuat Oranye */}
+        <Navbar.Brand
+          onClick={() => handleNavClick('#home')}
+          className="fw-bold fs-4 text-brand-primary"
+          style={{ cursor: 'pointer' }}
+        >
+          Mie Yamin Untar
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto align-items-center">
+            <Nav.Link onClick={() => handleNavClick('#home')} className="nav-link-dark me-2" style={{ cursor: 'pointer' }}>
+              Home
+            </Nav.Link>
+            <Nav.Link onClick={() => handleNavClick('#about')} className="nav-link-dark me-2" style={{ cursor: 'pointer' }}>
+              About
+            </Nav.Link>
+            <Nav.Link onClick={() => handleNavClick('#menu')} className="nav-link-dark me-2" style={{ cursor: 'pointer' }}>
+              Menu
+            </Nav.Link>
+            <Nav.Link onClick={() => handleNavClick('#lokasi')} className="nav-link-dark me-3" style={{ cursor: 'pointer' }}>
+              Contact
+            </Nav.Link>
+            {/* 3. Tombol "HI Andrew" diganti "Join Loyalty" */}
+            {!isPricingPage && (
+              <Link href="/pricing" passHref>
+                <Button variant="" className="btn-brand-primary ms-3">
+                  Join Loyalty
+                </Button>
+              </Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}

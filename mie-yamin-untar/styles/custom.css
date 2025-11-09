@@ -48,7 +48,6 @@ body {
     font-size: 1.125rem;
     text-decoration: none;
     display: inline-block;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
 
@@ -90,6 +89,12 @@ body {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vision-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
 }
 
 .vision-orange {
@@ -167,6 +172,12 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
 }
 
 .most-popular {
@@ -204,7 +215,6 @@ body {
     border-radius: 0.75rem;
     font-weight: 800;
     font-size: 1.125rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-decoration: none;
@@ -305,6 +315,12 @@ body {
     padding: 1.5rem;
     border-radius: 1rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
 }
 
 .contact-orange {
@@ -383,7 +399,6 @@ body {
     border-radius: 9999px;
     font-weight: 500;
     text-decoration: none;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
 }
 

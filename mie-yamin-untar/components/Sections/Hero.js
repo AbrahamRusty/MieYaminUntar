@@ -1,52 +1,84 @@
-const Hero = () => {
-  return (
-    <section id="home" className="hero-gradient pt-16 pb-24">
-      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-        {/* Teks Hero */}
-        <div>
-          <span className="section-tag tag-orange">
-            <i className="fas fa-star text-xs mr-1"></i> Campus Favorite Since 2018
-          </span>
-          <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
-            Campus Taste,
-            <span className="text-orange-500">Endless Flavor</span>
-          </h1>
-          <p className="mt-6 text-lg text-gray-600">
-            Mie autentik yang dibuat dengan bahan segar, topping yang melimpah, dan resep yang selalu berhasil. Setiap gigitan mengembalikan kenangan.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4">
-            <a href="#" className="bg-orange-500 text-white px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:bg-orange-600 transition-all text-center">
-              Join Loyalty Program
-            </a>
-            <a href="#menu" className="bg-green-500 text-white px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:bg-green-600 transition-all text-center">
-              Order Now
-            </a>
-          </div>
-          {/* Statistik */}
-          <div className="mt-12 flex gap-8">
-            <div>
-              <p className="text-4xl font-bold text-orange-500">10k+</p>
-              <p className="text-gray-600">Happy Students</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold text-orange-500 flex items-center">
-                4.8 <i className="fas fa-star text-yellow-400 ml-2 text-3xl"></i>
-              </p>
-              <p className="text-gray-600">Customer Rating</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold text-orange-500">5+</p>
-              <p className="text-gray-600">Years Serving</p>
-            </div>
-          </div>
-        </div>
-        {/* Gambar Hero */}
-        <div className="flex justify-center">
-          <img src="https://placehold.co/600x450/FDEBD0/333333?text=Mie+Yamin+Lezat" alt="Mie Yamin Lezat" className="rounded-3xl shadow-2xl object-cover w-full max-w-lg" />
-        </div>
-      </div>
-    </section>
-  );
-};
+'use client';
 
-export default Hero;
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import Image from 'next/image';
+import { BsStar, BsStarFill } from 'react-icons/bs';
+
+export default function Hero() {
+  return (
+    <Container as="section" className="py-5 my-md-5" id="home">
+      <Row className="align-items-center gy-5">
+        {/* Kolom Kiri: Teks, CTA, & Statistik */}
+        <Col lg={6}>
+          {/* Badge (tetap sama) */}
+          <div className="hero-badge mb-3">
+            <BsStar />
+            <span>Campus Favorite Since 2018</span>
+          </div>
+
+          {/* 1. Headline - KEDUA baris dibuat Oranye */}
+          <h1 className="display-3 fw-bolder lh-1 mb-3">
+            <span className="text-brand-primary">Campus Taste,</span>
+            <br />
+            <span className="text-brand-primary">Endless Flavor</span>
+          </h1>
+
+          {/* Paragraf (tetap sama) */}
+          <p className="lead text-muted mb-4 pb-2">
+            Mie autentik yang dibuat dengan bahan segar, topping yang melimpah,
+            dan resep yang selalu berhasil. Setiap gigitan mengembalikan
+            kenangan.
+          </p>
+
+          {/* Tombol CTA (tetap sama) */}
+          <div className="mb-5">
+            <Button
+              variant=""
+              className="btn-brand-primary btn-lg me-3 px-4"
+            >
+              Join Loyalty Program
+            </Button>
+            <Button
+              variant=""
+              className="btn-brand-secondary btn-lg px-4"
+            >
+              Order Now
+            </Button>
+          </div>
+
+          {/* 2. Statistik - Diubah sesuai permintaan Anda */}
+          <Row>
+            <Col xs={4} className="hero-stats-item">
+              <h4>100+</h4> {/* <--- DIUBAH */}
+              <p>Happy Students</p>
+            </Col>
+            <Col xs={4} className="hero-stats-item">
+              <h4 className="d-flex align-items-center">
+                4.8
+                <BsStarFill className="star-icon" />
+              </h4>
+              <p>Customer Rating</p>
+            </Col>
+            <Col xs={4} className="hero-stats-item">
+              <h4>50+</h4> {/* <--- DIUBAH */}
+              <p>Years Serving</p> {/* (Teksnya saya biarkan 'Years Serving') */}
+            </Col>
+          </Row>
+        </Col>
+
+        {/* Kolom Kanan: Gambar (tetap sama) */}
+        <Col lg={6}>
+          <Image
+            src="/mie-yamin-hero-baru.png" // Ganti dengan path gambar mie Anda
+            alt="Mie Yamin Lezat"
+            width={600}
+            height={600}
+            className="img-fluid rounded-4 shadow-lg"
+            style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+            priority
+          />
+        </Col>
+      </Row>
+    </Container>
+  );
+}
