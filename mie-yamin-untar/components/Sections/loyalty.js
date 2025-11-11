@@ -29,77 +29,57 @@ export default function Loyalty() {
           </Col>
         </Row>
 
-        {/* 2. KONTEN (Kiri: Benefit, Kanan: Form) */}
-        <Row className="mt-5 gy-4 align-items-center">
-          
-          {/* Kolom Kiri: Member Benefits */}
-          <Col lg={6}>
-            <h5 className="fw-bold fs-4 mb-3 text-white">Member Benefits:</h5>
-            <BenefitCard icon={<BsPercent />} text="Diskon 20%" />
-            <BenefitCard icon={<BsGift />} text="Voucher setiap minggu" />
-            <BenefitCard icon={<BsCalendarEvent />} text="Early access ke menu baru" />
-            <BenefitCard icon={<BsStar />} text="Prioritas" />
+        {/* 2. KONTEN: Tingkatan Membership */}
+        <Row className="mt-5 gy-4">
+          <Col xs={12}>
+            <h5 className="fw-bold fs-4 mb-4 text-white text-center">Tingkatan Membership</h5>
           </Col>
 
-          {/* Kolom Kanan: Form Registrasi */}
-          <Col lg={6}>
-            <div className="form-card">
-              <h4 className="fw-bold">Join Us Today</h4>
-              <p className="text-muted mb-4">
-                Create your account and start earning rewards
-              </p>
+          {/* Silver Tier */}
+          <Col lg={4} md={6}>
+            <div className="tier-card">
+              <div className="tier-header">
+                <h6 className="tier-title">Silver</h6>
+                <div className="tier-price">100 IDRX</div>
+              </div>
+              <div className="tier-benefits">
+                <BenefitCard icon={<BsPercent />} text="Diskon 10%" />
+                <BenefitCard icon={<BsGift />} text="Voucher bulanan" />
+                <BenefitCard icon={<BsCalendarEvent />} text="Early access menu" />
+              </div>
+            </div>
+          </Col>
 
-              <Form>
-                <Form.Group className="mb-3" controlId="formFullName">
-                  <Form.Label>Full Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your full name"
-                    className="form-card-input"
-                  />
-                </Form.Group>
+          {/* Gold Tier */}
+          <Col lg={4} md={6}>
+            <div className="tier-card featured">
+              <div className="tier-header">
+                <h6 className="tier-title">Gold</h6>
+                <div className="tier-price">250 IDRX</div>
+              </div>
+              <div className="tier-benefits">
+                <BenefitCard icon={<BsPercent />} text="Diskon 15%" />
+                <BenefitCard icon={<BsGift />} text="Voucher mingguan" />
+                <BenefitCard icon={<BsCalendarEvent />} text="Early access menu" />
+                <BenefitCard icon={<BsStar />} text="Prioritas antrian" />
+              </div>
+            </div>
+          </Col>
 
-                <Form.Group className="mb-3" controlId="formEmail">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="your.email@example.com"
-                    className="form-card-input"
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formWhatsApp">
-                  <Form.Label>WhatsApp Number</Form.Label>
-                  <Form.Control
-                    type="tel"
-                    placeholder="+62-"
-                    className="form-card-input"
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="******"
-                    className="form-card-input"
-                  />
-                </Form.Group>
-
-                <Button
-                  variant=""
-                  className="btn-brand-primary w-100 btn-lg mt-3"
-                >
-                  Login Here
-                </Button>
-              </Form>
-
-              <p className="form-footer-link mt-4">
-                Don't have an account? <a href="/register">Register here</a>
-              </p>
-              <p className="form-disclaimer mt-3">
-                By registering, you agree to our Terms & Conditions
-              </p>
+          {/* Platinum Tier */}
+          <Col lg={4} md={6}>
+            <div className="tier-card">
+              <div className="tier-header">
+                <h6 className="tier-title">Platinum</h6>
+                <div className="tier-price">500 IDRX</div>
+              </div>
+              <div className="tier-benefits">
+                <BenefitCard icon={<BsPercent />} text="Diskon 20%" />
+                <BenefitCard icon={<BsGift />} text="Voucher harian" />
+                <BenefitCard icon={<BsCalendarEvent />} text="Early access menu" />
+                <BenefitCard icon={<BsStar />} text="Prioritas maksimal" />
+                <BenefitCard icon={<BsStar />} text="Custom menu request" />
+              </div>
             </div>
           </Col>
         </Row>

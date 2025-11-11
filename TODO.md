@@ -1,0 +1,6 @@
+- [x] Update Header.js to add Dashboard dropdown button when connected
+- [x] Enhance Dashboard.js with dummy transaction history
+- [x] Enhance Dashboard.js with dummy rewards and benefits
+- [x] Enhance Dashboard.js with membership upgrade functionality
+- [ ] Test header dropdown functionality
+- [ ] Test dashboard navigation and content display
