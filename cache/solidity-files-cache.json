@@ -1294,8 +1294,8 @@
       ]
     },
     "/Users/budydjajani/Documents/NGODING/MieYaminUntar/contracts/MembershipNFT.sol": {
-      "lastModificationDate": 1762834709390,
-      "contentHash": "5129d95b4cf9759e260cc7858e097444",
+      "lastModificationDate": 1762934396914,
+      "contentHash": "50bd42df9604ba52af74e3ba93fbbc12",
       "sourceName": "contracts/MembershipNFT.sol",
       "solcConfig": {
         "version": "0.8.20",

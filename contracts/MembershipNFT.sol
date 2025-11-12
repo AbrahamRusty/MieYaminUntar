@@ -32,6 +32,7 @@ contract MembershipNFT is ERC721, ERC721URIStorage, Ownable, AccessControl {
         _safeMint(to, tokenId);
         tokenTier[tokenId] = Tier(tier);
         _setTokenURI(tokenId, uri);
+        emit MembershipPurchased(to, tokenId, Tier(tier), getTierPrice(Tier(tier)));
     }
 
     function upgradeMembership(uint256 tokenId, uint8 newTier) external onlyRole(MINTER_ROLE) {

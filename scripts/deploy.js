@@ -6,21 +6,25 @@ async function main() {
   // Deploy IDRX Token
   const IDRXToken = await ethers.getContractFactory("IDRXToken");
   const idrxToken = await IDRXToken.deploy();
-  await idrxToken.deployed();
-  console.log("IDRXToken deployed to:", idrxToken.address);
+  await idrxToken.waitForDeployment();
+  const idrxTokenAddress = await idrxToken.getAddress();
+  console.log("IDRXToken deployed to:", idrxTokenAddress);
 
   // Deploy Membership NFT
   const MembershipNFT = await ethers.getContractFactory("MembershipNFT");
   const membershipNFT = await MembershipNFT.deploy();
-  await membershipNFT.deployed();
-  console.log("MembershipNFT deployed to:", membershipNFT.address);
+  await membershipNFT.waitForDeployment();
+  const membershipNFTAddress = await membershipNFT.getAddress();
+  console.log("MembershipNFT deployed to:", membershipNFTAddress);
 
   // Save deployment info
   const fs = require("fs");
+  const network = await ethers.provider.getNetwork();
   const deploymentInfo = {
-    idrxToken: idrxToken.address,
-    membershipNFT: membershipNFT.address,
+    idrxToken: idrxTokenAddress,
+    membershipNFT: membershipNFTAddress,
     network: network.name,
+    chainId: network.chainId.toString(),
     deployedAt: new Date().toISOString()
   };
 

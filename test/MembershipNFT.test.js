@@ -3,6 +3,7 @@ const { ethers } = require("hardhat");
 
 describe("MembershipNFT", function () {
   let membershipNFT, idrxToken, owner, addr1, addr2;
+  const parseEther = ethers.parseEther;
 
   beforeEach(async function () {
     [owner, addr1, addr2] = await ethers.getSigners();
@@ -22,9 +23,9 @@ describe("MembershipNFT", function () {
     });
 
     it("Should have correct pricing", async function () {
-      expect(await membershipNFT.SILVER_PRICE()).to.equal(ethers.utils.parseEther("100"));
-      expect(await membershipNFT.GOLD_PRICE()).to.equal(ethers.utils.parseEther("250"));
-      expect(await membershipNFT.PLATINUM_PRICE()).to.equal(ethers.utils.parseEther("500"));
+      expect(await membershipNFT.SILVER_PRICE()).to.equal(parseEther("100"));
+      expect(await membershipNFT.GOLD_PRICE()).to.equal(parseEther("250"));
+      expect(await membershipNFT.PLATINUM_PRICE()).to.equal(parseEther("500"));
     });
   });
 
@@ -38,7 +39,7 @@ describe("MembershipNFT", function () {
     it("Should emit MembershipPurchased event", async function () {
       await expect(membershipNFT.mintMembership(addr1.address, 1, "https://example.com/token/1")) // Gold
         .to.emit(membershipNFT, "MembershipPurchased")
-        .withArgs(addr1.address, 0, 1, ethers.utils.parseEther("250"));
+        .withArgs(addr1.address, 0, 1, parseEther("250"));
     });
   });
 
