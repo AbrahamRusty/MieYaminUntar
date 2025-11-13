@@ -15,11 +15,10 @@ export default function Pricing() {
             <Card className="pricing-card">
               <Card.Body>
                 <Card.Title>Silver</Card.Title>
-                
-                {/* --- HARGA DIPERBARUI --- */}
+
+                {/* --- HARGA DIPERBARUI ke IDRX --- */}
                 <div className="pricing-card-price">
-                  Rp25.000 <span className="period">/</span>
-                  <span className="period-block">Bln</span>
+                  100 <span className="period">IDRX</span>
                 </div>
 
                 <ul className="pricing-list">
@@ -28,7 +27,7 @@ export default function Pricing() {
                   <li>Request menu</li>
                 </ul>
                 <Button variant="" className="btn-brand-primary">
-                  Register
+                  Beli dengan IDRX
                 </Button>
               </Card.Body>
             </Card>
@@ -40,12 +39,11 @@ export default function Pricing() {
               <Card.Body>
                 <Card.Title>Platinum</Card.Title>
 
-                {/* --- HARGA DIPERBARUI --- */}
+                {/* --- HARGA DIPERBARUI ke IDRX --- */}
                 <div className="pricing-card-price">
-                  Rp75.000 <span className="period">/</span>
-                  <span className="period-block">Bln</span>
+                  500 <span className="period">IDRX</span>
                 </div>
-                
+
                 <ul className="pricing-list">
                   <li>Voucher</li>
                   <li>Feed Back</li>
@@ -53,10 +51,10 @@ export default function Pricing() {
                   <li>Costume Menu</li>
                   <li>Prioritas</li>
                 </ul>
-                
+
                 {/* --- TOMBOL DIPERBARUI --- */}
                 <Button variant="" className="btn-brand-primary">
-                  Register
+                  Beli dengan IDRX
                 </Button>
 
               </Card.Body>
@@ -69,9 +67,9 @@ export default function Pricing() {
               <Card.Body>
                 <Card.Title>Gold</Card.Title>
 
-                {/* --- HARGA DIPERBARUI --- */}
+                {/* --- HARGA DIPERBARUI ke IDRX --- */}
                 <div className="pricing-card-price">
-                  Rp50.000 <span className="period">/ Bln</span>
+                  250 <span className="period">IDRX</span>
                 </div>
 
                 <ul className="pricing-list">
@@ -81,7 +79,7 @@ export default function Pricing() {
                   <li>Prioritas</li>
                 </ul>
                 <Button variant="" className="btn-brand-primary">
-                  Register
+                  Beli dengan IDRX
                 </Button>
               </Card.Body>
             </Card>

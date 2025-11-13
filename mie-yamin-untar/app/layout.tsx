@@ -7,13 +7,14 @@ import { Inter } from 'next/font/google';
 // Impor komponen layout Anda
 import Header from '@/components/Layout/Header';
 import FooterWrapper from '@/components/Layout/FooterWrapper';
+import { Web3ModalProvider } from '@/components/Web3Providers';
 import { AnimatePresence } from 'framer-motion';
 
 const inter = Inter({ subsets: ['latin'] }); // Next.js default, bisa dihapus jika hanya pakai Poppins
 
 export const metadata: Metadata = {
-  title: 'Mie Yamin Untar - Campus Taste, Endless Flavor',
-  description: 'Mie Yamin paling enak se-Untar!',
+  title: 'Mie Yamin Loyalty - Program Loyalitas dengan Web3',
+  description: 'Program loyalitas Mie Yamin dengan Web3 dan NFT membership',
 };
 
 export default function RootLayout({
@@ -24,13 +25,15 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body>
-        <Header />
-        <div style={{ paddingTop: '80px' }}>
-          <AnimatePresence mode="wait">
-            <main>{children}</main>
-          </AnimatePresence>
-        </div>
-        <FooterWrapper />
+        <Web3ModalProvider>
+          <Header />
+          <div style={{ paddingTop: '80px' }}>
+            <AnimatePresence mode="wait">
+              <main>{children}</main>
+            </AnimatePresence>
+          </div>
+          <FooterWrapper />
+        </Web3ModalProvider>
       </body>
     </html>
   );
