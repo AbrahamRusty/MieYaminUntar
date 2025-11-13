@@ -165,14 +165,14 @@ export default function VisionMission() {
       <Row className="justify-content-center text-center mb-5">
         <Col xs="auto">
           {/* Badge kustom 'Our Story' */}
-          <div ref={badgeRef} className="soft-badge">Our Story</div>
+          <div ref={badgeRef} className="soft-badge">Cerita Kami</div>
         </Col>
         <Col xs={12}>
-          <h2 ref={titleRef} className="section-title mt-3">About Mie Yamin Untar</h2>
+          <h2 ref={titleRef} className="section-title mt-3">Tentang Mie Yamin Untar</h2>
         </Col>
         <Col lg={7}>
           <p ref={subtitleRef} className="text-muted fs-5">
-            Dari gerobak makanan sederhana menjadi merek kampus yang dicintai
+            Dari gerobak makanan sederhana menjadi merek kampus yang dicintai oleh mahasiswa
           </p>
         </Col>
       </Row>
@@ -198,13 +198,13 @@ export default function VisionMission() {
             <p className="text-muted" style={{ fontSize: '1.1rem' }}>
               Sejak dibuka dekat Universitas Tarumanagara, Mie Yamin Untar telah
               menjadi favorit bagi mahasiswa dan warga lokal yang mencari rasa
-              hangat dan menghibur.
+              hangat dan menghibur di tengah kesibukan kampus.
             </p>
             <p className="text-muted" style={{ fontSize: '1.1rem' }}>
-              Bermula dari gerobak makanan kecil, kami telah berkembang menjadi
-              merek modern yang menggabungkan resep tradisional dan kemudahan
-              digital. Komitmen kami terhadap kualitas dan rasa tetap tidak
-              berubah.
+              Bermula dari gerobak makanan kecil di pinggir jalan, kami telah berkembang menjadi
+              merek modern yang menggabungkan resep tradisional autentik dan kemudahan
+              pemesanan digital. Komitmen kami terhadap kualitas bahan dan kepuasan pelanggan tetap tidak
+              berubah sejak hari pertama.
             </p>
           </div>
 
@@ -216,7 +216,7 @@ export default function VisionMission() {
             </Col>
             <Col xs={4}>
               <h1 className="fw-bold text-brand-primary mb-0">50+</h1>
-              <span className="text-muted">Order Per Hari</span>
+              <span className="text-muted">Pesanan Per Hari</span>
             </Col>
             <Col xs={4}>
               <h1 className="fw-bold text-brand-primary mb-0">100%</h1>
@@ -237,8 +237,8 @@ export default function VisionMission() {
             <BsBullseye className="fs-1 mb-3" />
             <h3 className="fw-bold">VISI</h3>
             <p className="fs-5">
-              Menjadi merek mi kampus teratas yang menggabungkan cita rasa dan
-              teknologi.
+              Menjadi merek mie kampus teratas yang menggabungkan cita rasa autentik tradisional
+              dengan kemajuan teknologi modern untuk memberikan pengalaman kuliner terbaik.
             </p>
           </div>
         </Col>
@@ -254,15 +254,15 @@ export default function VisionMission() {
             <ul className="misi-list mt-3 fs-5">
               <li>
                 <BsFillStopFill className="misi-list-icon" />
-                Menyajikan bahan halal berkualitas tinggi
+                Menyajikan bahan-bahan halal berkualitas tinggi dan segar setiap hari
               </li>
               <li>
                 <BsFillStopFill className="misi-list-icon" />
-                Menyajikan bahan halal berkualitas tinggi ...
+                Mempertahankan cita rasa autentik dengan resep turun temurun yang telah teruji
               </li>
               <li>
                 <BsFillStopFill className="misi-list-icon" />
-                Bangun komunitas pelanggan yang setia dengan manfaat eksklusif
+                Membangun komunitas pelanggan yang setia dengan memberikan manfaat eksklusif dan pengalaman terbaik
               </li>
             </ul>
           </div>

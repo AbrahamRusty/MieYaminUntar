@@ -1,16 +1,20 @@
 // components/FullMenu.js
 'use client';
 
-import { 
-  Container, 
-  Row, 
-  Col, 
-  ListGroup, 
-  InputGroup, 
-  Form 
+import {
+  Container,
+  Row,
+  Col,
+  ListGroup,
+  InputGroup,
+  Form
 } from 'react-bootstrap';
-import { BsSearch } from 'react-icons/bs'; 
+import { BsSearch } from 'react-icons/bs';
 import MenuGridCard from '../UI/MenuGridCard'; // Menggunakan kartu Anda
+import FloatingCart from '../UI/FloatingCart';
+import CartModal from '../UI/CartModal';
+import { useCart } from '@/contexts/CartContext';
+import { useState, useEffect } from 'react';
 
 // Data dummy baru dengan 5 item per kategori
 const menuData = {
@@ -144,7 +148,33 @@ const menuData = {
   ],
 };
 
-export default function FullMenu() {
+function AllMenuContent() {
+  const { isCartOpen, setIsCartOpen } = useCart();
+  const [activeCategory, setActiveCategory] = useState('mie');
+
+  // Intersection Observer for category highlighting
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveCategory(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    // Observe all category sections
+    const categories = ['mie', 'bihun', 'kuetiaw', 'topping'];
+    categories.forEach((category) => {
+      const element = document.getElementById(category);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     // Gunakan class .menu-section untuk latar abu-abu
     <div className="menu-section" id="menu">
@@ -155,11 +185,10 @@ export default function FullMenu() {
           <Col lg={3}>
             <div className="menu-sidebar">
               <ListGroup as="ul" className="menu-sidebar-list">
-                {/* 'active' menandai "Mie" sebagai default */}
-                <li><a href="#mie" className="active">Mie</a></li>
-                <li><a href="#bihun">Bihun</a></li>
-                <li><a href="#kuetiaw">Kue Tiaw</a></li>
-                <li><a href="#topping">Topping</a></li>
+                <li><a href="#mie" className={activeCategory === 'mie' ? 'active' : ''}>Mie</a></li>
+                <li><a href="#bihun" className={activeCategory === 'bihun' ? 'active' : ''}>Bihun</a></li>
+                <li><a href="#kuetiaw" className={activeCategory === 'kuetiaw' ? 'active' : ''}>Kue Tiaw</a></li>
+                <li><a href="#topping" className={activeCategory === 'topping' ? 'active' : ''}>Topping</a></li>
               </ListGroup>
             </div>
           </Col>
@@ -167,7 +196,7 @@ export default function FullMenu() {
           {/* 2. KONTEN KANAN */}
           <Col lg={9}>
             <div className="menu-content">
-              
+
               {/* Search Bar (Permintaan #3) */}
               <InputGroup className="menu-search-bar mb-4">
                 <InputGroup.Text><BsSearch /></InputGroup.Text>
@@ -176,21 +205,21 @@ export default function FullMenu() {
                   aria-label="Cari menu"
                 />
               </InputGroup>
-              
+
               {/* Loop melalui data menu */}
               {Object.keys(menuData).map((category) => (
                 <div key={category} id={category}>
-                  
+
                   {/* Judul Grup (Kotak Hitam) */}
                   <div className="menu-group-title-box">
                     {category}
                   </div>
-                  
+
                   <Row className="gy-4 mb-5">
                     {menuData[category].map((item, index) => (
                       // SEMUA kartu, termasuk topping, kini lg={4}
                       // (Permintaan #4)
-                      <Col lg={4} md={6} sm={12} key={index}> 
+                      <Col lg={4} md={6} sm={12} key={index}>
                         <MenuGridCard
                           title={item.title}
                           description={item.description}
@@ -200,15 +229,27 @@ export default function FullMenu() {
                       </Col>
                     ))}
                   </Row>
-                  
+
                 </div>
               ))}
-              
+
             </div>
           </Col>
-          
+
         </Row>
       </Container>
+
+      {/* Floating Cart */}
+      <FloatingCart />
+
+      {/* Cart Modal */}
+      <CartModal show={isCartOpen} onHide={() => setIsCartOpen(false)} />
     </div>
+  );
+}
+
+export default function FullMenu() {
+  return (
+    <AllMenuContent />
   );
 }
