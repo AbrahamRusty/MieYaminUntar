@@ -25,12 +25,12 @@ export default function Register() {
         {/* 1. HEADER */}
         <Row className="justify-content-center text-center">
           <Col lg={8}>
-            <div className="loyalty-badge">Registration</div>
+            <div className="loyalty-badge">Pendaftaran</div>
             <h2 className="display-4 fw-bold text-white mt-3">
-              Join Mie Yamin Untar
+              Bergabung dengan Mie Yamin Untar
             </h2>
             <p className="fs-5 mt-3" style={{ opacity: 0.8 }}>
-              Register to access exclusive features and benefits
+              Daftar untuk mengakses fitur eksklusif dan manfaat khusus member
             </p>
           </Col>
         </Row>
@@ -40,27 +40,27 @@ export default function Register() {
 
           {/* Kolom Kiri: Member Benefits */}
           <Col lg={6}>
-            <h5 className="fw-bold fs-4 mb-3 text-white">Member Benefits:</h5>
-            <BenefitCard icon={<BsPercent />} text="Diskon 20%" />
+            <h5 className="fw-bold fs-4 mb-3 text-white">Manfaat Member:</h5>
+            <BenefitCard icon={<BsPercent />} text="Diskon hingga 20%" />
             <BenefitCard icon={<BsGift />} text="Voucher setiap minggu" />
-            <BenefitCard icon={<BsCalendarEvent />} text="Early access ke menu baru" />
-            <BenefitCard icon={<BsStar />} text="Prioritas" />
+            <BenefitCard icon={<BsCalendarEvent />} text="Akses awal ke menu baru" />
+            <BenefitCard icon={<BsStar />} text="Layanan prioritas" />
           </Col>
 
           {/* Kolom Kanan: Form Registrasi */}
           <Col lg={6}>
             <div className="form-card">
-              <h4 className="fw-bold">Create Your Account</h4>
+              <h4 className="fw-bold">Buat Akun Anda</h4>
               <p className="text-muted mb-4">
-                Fill in your details to get started
+                Isi detail Anda untuk memulai
               </p>
 
               <Form>
                 <Form.Group className="mb-3" controlId="formFullName">
-                  <Form.Label>Full Name</Form.Label>
+                  <Form.Label>Nama Lengkap</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter your full name"
+                    placeholder="Masukkan nama lengkap"
                     className="form-card-input"
                   />
                 </Form.Group>
@@ -69,13 +69,13 @@ export default function Register() {
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="email"
-                    placeholder="your.email@example.com"
+                    placeholder="email.anda@example.com"
                     className="form-card-input"
                   />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formWhatsApp">
-                  <Form.Label>WhatsApp Number</Form.Label>
+                  <Form.Label>Nomor WhatsApp</Form.Label>
                   <Form.Control
                     type="tel"
                     placeholder="+62-"
@@ -84,7 +84,7 @@ export default function Register() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Kata Sandi</Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="******"
@@ -94,12 +94,12 @@ export default function Register() {
 
                 {/* Radio buttons for registration type */}
                 <Form.Group className="mb-3">
-                  <Form.Label>Registration Type</Form.Label>
+                  <Form.Label>Tipe Pendaftaran</Form.Label>
                   <div>
                     <Form.Check
                       type="radio"
                       id="login-radio"
-                      label="Just Login (No Membership)"
+                      label="Hanya Login (Tanpa Membership)"
                       name="registrationType"
                       value="login"
                       checked={registrationType === 'login'}
@@ -108,7 +108,7 @@ export default function Register() {
                     <Form.Check
                       type="radio"
                       id="membership-radio"
-                      label="Join Membership"
+                      label="Bergabung Membership"
                       name="registrationType"
                       value="membership"
                       checked={registrationType === 'membership'}
@@ -120,16 +120,16 @@ export default function Register() {
                 {/* Membership level dropdown if membership is selected */}
                 {registrationType === 'membership' && (
                   <Form.Group className="mb-3" controlId="formMembershipLevel">
-                    <Form.Label>Select Membership Level</Form.Label>
+                    <Form.Label>Pilih Tingkat Membership</Form.Label>
                     <Form.Select
                       className="form-card-input"
                       value={selectedMembership}
                       onChange={(e) => setSelectedMembership(e.target.value)}
                     >
-                      <option value="">Choose a level</option>
-                      <option value="silver">Silver - Rp25.000/month</option>
-                      <option value="gold">Gold - Rp50.000/month</option>
-                      <option value="platinum">Platinum - Rp75.000/month</option>
+                      <option value="">Pilih tingkat</option>
+                      <option value="silver">Silver - Rp25.000/bulan</option>
+                      <option value="gold">Gold - Rp50.000/bulan</option>
+                      <option value="platinum">Platinum - Rp75.000/bulan</option>
                     </Form.Select>
                   </Form.Group>
                 )}
@@ -141,19 +141,19 @@ export default function Register() {
                     if (registrationType === 'membership' && selectedMembership) {
                       setShowPaymentModal(true);
                     } else {
-                      alert('Registration successful!');
+                      alert('Pendaftaran berhasil!');
                     }
                   }}
                 >
-                  Register Now
+                  Daftar Sekarang
                 </Button>
               </Form>
 
               <p className="form-footer-link mt-4">
-                Already have an account? <a href="/login">Login here</a>
+                Sudah punya akun? <a href="/login">Login di sini</a>
               </p>
               <p className="form-disclaimer mt-3">
-                By registering, you agree to our Terms & Conditions
+                Dengan mendaftar, Anda menyetujui Syarat & Ketentuan kami
               </p>
             </div>
           </Col>
@@ -163,18 +163,18 @@ export default function Register() {
       {/* Payment Modal */}
       <Modal show={showPaymentModal} onHide={() => setShowPaymentModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Complete Membership Payment</Modal.Title>
+          <Modal.Title>Selesaikan Pembayaran Membership</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>You have selected: <strong>{selectedMembership.charAt(0).toUpperCase() + selectedMembership.slice(1)} Membership</strong></p>
-          <p>Amount: <strong>
+          <p>Anda telah memilih: <strong>{selectedMembership.charAt(0).toUpperCase() + selectedMembership.slice(1)} Membership</strong></p>
+          <p>Jumlah: <strong>
             {selectedMembership === 'silver' ? 'Rp25.000' :
              selectedMembership === 'gold' ? 'Rp50.000' :
-             'Rp75.000'}/month
+             'Rp75.000'}/bulan
           </strong></p>
 
           <Form.Group className="mb-3">
-            <Form.Label>Select Payment Method</Form.Label>
+            <Form.Label>Pilih Metode Pembayaran</Form.Label>
             <div>
               <Form.Check
                 type="radio"
@@ -188,7 +188,7 @@ export default function Register() {
               <Form.Check
                 type="radio"
                 id="bank-radio"
-                label={<><BsBank /> Bank Transfer</>}
+                label={<><BsBank /> Transfer Bank</>}
                 name="paymentMethod"
                 value="bank"
                 checked={paymentMethod === 'bank'}
@@ -199,33 +199,33 @@ export default function Register() {
 
           {paymentMethod === 'qris' && (
             <div className="text-center">
-              <h6>Scan QRIS Code</h6>
+              <h6>Scan Kode QRIS</h6>
               <div style={{ backgroundColor: '#f0f0f0', padding: '20px', borderRadius: '10px', display: 'inline-block' }}>
                 <img src="https://via.placeholder.com/200x200?text=QRIS+Barcode" alt="QRIS Barcode" style={{ width: '200px', height: '200px' }} />
               </div>
-              <p className="mt-2">Scan this QR code with your e-wallet app</p>
+              <p className="mt-2">Scan kode QR ini dengan aplikasi e-wallet Anda</p>
             </div>
           )}
 
           {paymentMethod === 'bank' && (
             <div>
-              <h6>Bank Transfer Details</h6>
+              <h6>Detail Transfer Bank</h6>
               <p>Bank: BCA</p>
-              <p>Account Number: 1234567890</p>
-              <p>Account Name: Mie Yamin Untar</p>
-              <p>Please transfer the exact amount and include your name in the notes.</p>
+              <p>Nomor Rekening: 1234567890</p>
+              <p>Nama Rekening: Mie Yamin Untar</p>
+              <p>Silakan transfer jumlah yang tepat dan sertakan nama Anda di catatan.</p>
             </div>
           )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowPaymentModal(false)}>
-            Cancel
+            Batal
           </Button>
           <Button variant="primary" onClick={() => {
-            alert('Payment submitted! Membership activated.');
+            alert('Pembayaran dikirim! Membership diaktifkan.');
             setShowPaymentModal(false);
           }}>
-            Confirm Payment
+            Konfirmasi Pembayaran
           </Button>
         </Modal.Footer>
       </Modal>

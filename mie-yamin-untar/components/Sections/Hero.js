@@ -111,7 +111,7 @@ export default function Hero() {
           {/* Badge (tetap sama) */}
           <div ref={badgeRef} className="hero-badge mb-3">
             <BsStar />
-            <span>Campus Favorite Since 2018</span>
+            <span>Favorit Kampus Sejak 2018</span>
           </div>
 
           {/* 1. Headline - KEDUA baris dibuat Oranye */}
@@ -123,9 +123,9 @@ export default function Hero() {
 
           {/* Paragraf (tetap sama) */}
           <p ref={paragraphRef} className="lead text-muted mb-4 pb-2">
-            Mie autentik yang dibuat dengan bahan segar, topping yang melimpah,
-            dan resep yang selalu berhasil. Setiap gigitan mengembalikan
-            kenangan.
+            Mie autentik yang dibuat dengan bahan-bahan segar pilihan, topping melimpah,
+            dan resep rahasia yang selalu berhasil memuaskan. Setiap gigitan
+            membawa kenangan kuliner kampus yang tak terlupakan.
           </p>
 
           {/* Tombol CTA (tetap sama) */}
@@ -135,7 +135,7 @@ export default function Hero() {
                 variant=""
                 className="btn-brand-primary btn-lg me-3 px-4"
               >
-                Join Loyalty Program
+                Gabung Program Loyalitas
               </Button>
             </Link>
             <Link href="/menu" passHref>
@@ -143,7 +143,7 @@ export default function Hero() {
                 variant=""
                 className="btn-brand-secondary btn-lg px-4"
               >
-                Order Now
+                Pesan Sekarang
               </Button>
             </Link>
           </div>
@@ -152,18 +152,18 @@ export default function Hero() {
           <Row ref={statsRef}>
             <Col xs={4} className="hero-stats-item">
               <h4>100+</h4> {/* <--- DIUBAH */}
-              <p>Happy Students</p>
+              <p>Mahasiswa Puas</p>
             </Col>
             <Col xs={4} className="hero-stats-item">
               <h4 className="d-flex align-items-center">
                 4.8
                 <BsStarFill className="star-icon" />
               </h4>
-              <p>Customer Rating</p>
+              <p>Rating Pelanggan</p>
             </Col>
             <Col xs={4} className="hero-stats-item">
               <h4>50+</h4> {/* <--- DIUBAH */}
-              <p>Years Serving</p> {/* (Teksnya saya biarkan 'Years Serving') */}
+              <p>Tahun Melayani</p> {/* (Teksnya saya biarkan 'Years Serving') */}
             </Col>
           </Row>
         </Col>

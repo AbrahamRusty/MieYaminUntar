@@ -9,7 +9,7 @@ export default function Pricing() {
         {/* 2. KARTU HARGA */}
         {/* 'align-items-center' dihapus agar kartu platinum bisa lebih tinggi */}
         <Row className="justify-content-center gy-4">
-          
+
           {/* Kartu 1: Silver */}
           <Col lg={4} md={6}>
             <Card className="pricing-card">
@@ -22,9 +22,9 @@ export default function Pricing() {
                 </div>
 
                 <ul className="pricing-list">
-                  <li>Voucher</li>
-                  <li>Feed Back</li>
-                  <li>Request menu</li>
+                  <li>Voucher Diskon</li>
+                  <li>Kirim Masukan</li>
+                  <li>Request Menu Khusus</li>
                 </ul>
                 <Button variant="" className="btn-brand-primary">
                   Beli dengan IDRX
@@ -45,11 +45,11 @@ export default function Pricing() {
                 </div>
 
                 <ul className="pricing-list">
-                  <li>Voucher</li>
-                  <li>Feed Back</li>
-                  <li>Request Menu</li>
-                  <li>Costume Menu</li>
-                  <li>Prioritas</li>
+                  <li>Voucher Diskon</li>
+                  <li>Kirim Masukan</li>
+                  <li>Request Menu Khusus</li>
+                  <li>Menu Custom</li>
+                  <li>Layanan Prioritas</li>
                 </ul>
 
                 {/* --- TOMBOL DIPERBARUI --- */}
@@ -73,10 +73,10 @@ export default function Pricing() {
                 </div>
 
                 <ul className="pricing-list">
-                  <li>Voucher</li>
-                  <li>Feed back</li>
-                  <li>Request Menu</li>
-                  <li>Prioritas</li>
+                  <li>Voucher Diskon</li>
+                  <li>Kirim Masukan</li>
+                  <li>Request Menu Khusus</li>
+                  <li>Layanan Prioritas</li>
                 </ul>
                 <Button variant="" className="btn-brand-primary">
                   Beli dengan IDRX

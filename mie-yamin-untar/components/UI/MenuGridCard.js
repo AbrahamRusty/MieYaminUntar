@@ -3,8 +3,11 @@
 
 import { Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
+import { useCart } from '@/contexts/CartContext';
 
 export default function MenuGridCard({ title, description, price, imageUrl }) {
+  const { addToCart } = useCart();
+
   return (
     <Card className="menu-grid-card">
       <Image
@@ -20,22 +23,20 @@ export default function MenuGridCard({ title, description, price, imageUrl }) {
         <Card.Text className="text-muted small mb-3 flex-grow-1">
           {description}
         </Card.Text>
-        
+
         {/* Harga (Oranye) */}
         <div className="card-price">
           {price}
         </div>
-        
+
         {/* Tombol Order (Hijau) */}
-        <a
-          href="https://wa.me/6281234567890"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-brand-secondary"
-          style={{ textDecoration: 'none', color: 'inherit' }}
+        <Button
+          variant=""
+          className="btn-brand-secondary"
+          onClick={() => addToCart({ title, description, price, imageUrl })}
         >
-          Order
-        </a>
+          Pesan
+        </Button>
       </Card.Body>
     </Card>
   );
