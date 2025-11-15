@@ -1,9 +1,12 @@
 'use client';
 
-import { Container, Row, Col, Form, Button, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 // Impor ikon
-import { BsPercent, BsGift, BsCalendarEvent, BsStar, BsCreditCard, BsBank } from 'react-icons/bs';
+import { BsPercent, BsGift, BsCalendarEvent, BsStar } from 'react-icons/bs';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 // Helper component untuk Benefit Card
 const BenefitCard = ({ icon, text }) => (
@@ -14,10 +17,14 @@ const BenefitCard = ({ icon, text }) => (
 );
 
 export default function Register() {
-  const [registrationType, setRegistrationType] = useState('login'); // 'login' or 'membership'
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedMembership, setSelectedMembership] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('qris');
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: ''
+  });
 
   return (
     <div className="loyalty-section" id="register">
@@ -62,6 +69,8 @@ export default function Register() {
                     type="text"
                     placeholder="Masukkan nama lengkap"
                     className="form-card-input"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
                   />
                 </Form.Group>
 
@@ -71,6 +80,8 @@ export default function Register() {
                     type="email"
                     placeholder="email.anda@example.com"
                     className="form-card-input"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
                   />
                 </Form.Group>
 
@@ -80,6 +91,8 @@ export default function Register() {
                     type="tel"
                     placeholder="+62-"
                     className="form-card-input"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   />
                 </Form.Group>
 
@@ -89,63 +102,35 @@ export default function Register() {
                     type="password"
                     placeholder="******"
                     className="form-card-input"
+                    value={formData.password}
+                    onChange={(e) => setFormData({...formData, password: e.target.value})}
                   />
                 </Form.Group>
-
-                {/* Radio buttons for registration type */}
-                <Form.Group className="mb-3">
-                  <Form.Label>Tipe Pendaftaran</Form.Label>
-                  <div>
-                    <Form.Check
-                      type="radio"
-                      id="login-radio"
-                      label="Hanya Login (Tanpa Membership)"
-                      name="registrationType"
-                      value="login"
-                      checked={registrationType === 'login'}
-                      onChange={(e) => setRegistrationType(e.target.value)}
-                    />
-                    <Form.Check
-                      type="radio"
-                      id="membership-radio"
-                      label="Bergabung Membership"
-                      name="registrationType"
-                      value="membership"
-                      checked={registrationType === 'membership'}
-                      onChange={(e) => setRegistrationType(e.target.value)}
-                    />
-                  </div>
-                </Form.Group>
-
-                {/* Membership level dropdown if membership is selected */}
-                {registrationType === 'membership' && (
-                  <Form.Group className="mb-3" controlId="formMembershipLevel">
-                    <Form.Label>Pilih Tingkat Membership</Form.Label>
-                    <Form.Select
-                      className="form-card-input"
-                      value={selectedMembership}
-                      onChange={(e) => setSelectedMembership(e.target.value)}
-                    >
-                      <option value="">Pilih tingkat</option>
-                      <option value="silver">Silver - Rp25.000/bulan</option>
-                      <option value="gold">Gold - Rp50.000/bulan</option>
-                      <option value="platinum">Platinum - Rp75.000/bulan</option>
-                    </Form.Select>
-                  </Form.Group>
-                )}
 
                 <Button
                   variant=""
                   className="btn-brand-primary w-100 btn-lg mt-3"
-                  onClick={() => {
-                    if (registrationType === 'membership' && selectedMembership) {
-                      setShowPaymentModal(true);
-                    } else {
-                      alert('Pendaftaran berhasil!');
+                  disabled={isLoading}
+                  onClick={async () => {
+                    if (!formData.name || !formData.email || !formData.phone || !formData.password) {
+                      toast.error('Mohon lengkapi semua field');
+                      return;
+                    }
+
+                    setIsLoading(true);
+                    try {
+                      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000'}/api/auth/register`, formData);
+                      toast.success('Pendaftaran berhasil! Silakan login.');
+                      router.push('/');
+                    } catch (error) {
+                      console.error('Registration error:', error);
+                      toast.error(error.response?.data?.message || 'Gagal mendaftar');
+                    } finally {
+                      setIsLoading(false);
                     }
                   }}
                 >
-                  Daftar Sekarang
+                  {isLoading ? 'Mendaftarkan...' : 'Daftar Sekarang'}
                 </Button>
               </Form>
 
@@ -160,75 +145,7 @@ export default function Register() {
         </Row>
       </Container>
 
-      {/* Payment Modal */}
-      <Modal show={showPaymentModal} onHide={() => setShowPaymentModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Selesaikan Pembayaran Membership</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Anda telah memilih: <strong>{selectedMembership.charAt(0).toUpperCase() + selectedMembership.slice(1)} Membership</strong></p>
-          <p>Jumlah: <strong>
-            {selectedMembership === 'silver' ? 'Rp25.000' :
-             selectedMembership === 'gold' ? 'Rp50.000' :
-             'Rp75.000'}/bulan
-          </strong></p>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Pilih Metode Pembayaran</Form.Label>
-            <div>
-              <Form.Check
-                type="radio"
-                id="qris-radio"
-                label={<><BsCreditCard /> QRIS Barcode</>}
-                name="paymentMethod"
-                value="qris"
-                checked={paymentMethod === 'qris'}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
-              <Form.Check
-                type="radio"
-                id="bank-radio"
-                label={<><BsBank /> Transfer Bank</>}
-                name="paymentMethod"
-                value="bank"
-                checked={paymentMethod === 'bank'}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
-            </div>
-          </Form.Group>
-
-          {paymentMethod === 'qris' && (
-            <div className="text-center">
-              <h6>Scan Kode QRIS</h6>
-              <div style={{ backgroundColor: '#f0f0f0', padding: '20px', borderRadius: '10px', display: 'inline-block' }}>
-                <img src="https://via.placeholder.com/200x200?text=QRIS+Barcode" alt="QRIS Barcode" style={{ width: '200px', height: '200px' }} />
-              </div>
-              <p className="mt-2">Scan kode QR ini dengan aplikasi e-wallet Anda</p>
-            </div>
-          )}
-
-          {paymentMethod === 'bank' && (
-            <div>
-              <h6>Detail Transfer Bank</h6>
-              <p>Bank: BCA</p>
-              <p>Nomor Rekening: 1234567890</p>
-              <p>Nama Rekening: Mie Yamin Untar</p>
-              <p>Silakan transfer jumlah yang tepat dan sertakan nama Anda di catatan.</p>
-            </div>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowPaymentModal(false)}>
-            Batal
-          </Button>
-          <Button variant="primary" onClick={() => {
-            alert('Pembayaran dikirim! Membership diaktifkan.');
-            setShowPaymentModal(false);
-          }}>
-            Konfirmasi Pembayaran
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 }
