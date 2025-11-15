@@ -26,8 +26,8 @@ export default function Pricing() {
                   <li>Kirim Masukan</li>
                   <li>Request Menu Khusus</li>
                 </ul>
-                <Button variant="" className="btn-brand-primary">
-                  Beli dengan IDRX
+                <Button variant="" className="btn-brand-primary" onClick={() => window.location.href = '/membership'}>
+                  Langganan Sekarang
                 </Button>
               </Card.Body>
             </Card>
@@ -53,8 +53,8 @@ export default function Pricing() {
                 </ul>
 
                 {/* --- TOMBOL DIPERBARUI --- */}
-                <Button variant="" className="btn-brand-primary">
-                  Beli dengan IDRX
+                <Button variant="" className="btn-brand-primary" onClick={() => window.location.href = '/membership'}>
+                  Langganan Sekarang
                 </Button>
 
               </Card.Body>
@@ -78,8 +78,8 @@ export default function Pricing() {
                   <li>Request Menu Khusus</li>
                   <li>Layanan Prioritas</li>
                 </ul>
-                <Button variant="" className="btn-brand-primary">
-                  Beli dengan IDRX
+                <Button variant="" className="btn-brand-primary" onClick={() => window.location.href = '/membership'}>
+                  Langganan Sekarang
                 </Button>
               </Card.Body>
             </Card>

@@ -33,10 +33,13 @@ export default function PaymentModal({ show, onHide, tier, price }) {
           setStep(1);
         }, 2000);
       } else {
+        // If payment fails due to insufficient balance, show error
+        toast.error('Saldo IDRX tidak mencukupi atau transaksi gagal');
         setStep(1);
       }
     } catch (error) {
       console.error('Payment error:', error);
+      toast.error('Transaksi gagal: ' + error.message);
       setStep(1);
     }
   };
