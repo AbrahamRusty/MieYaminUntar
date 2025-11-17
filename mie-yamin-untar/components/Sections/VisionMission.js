@@ -253,15 +253,12 @@ export default function VisionMission() {
             <h3 className="fw-bold">MISI</h3>
             <ul className="misi-list mt-3 fs-5">
               <li>
-                <BsFillStopFill className="misi-list-icon" />
                 Menyajikan bahan-bahan halal berkualitas tinggi dan segar setiap hari
               </li>
               <li>
-                <BsFillStopFill className="misi-list-icon" />
                 Mempertahankan cita rasa autentik dengan resep turun temurun yang telah teruji
               </li>
               <li>
-                <BsFillStopFill className="misi-list-icon" />
                 Membangun komunitas pelanggan yang setia dengan memberikan manfaat eksklusif dan pengalaman terbaik
               </li>
             </ul>
