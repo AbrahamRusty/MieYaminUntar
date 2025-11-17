@@ -156,15 +156,6 @@ export default function CartModal({ show, onHide }) {
                     checked={paymentMethod === 'qris'}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
-                  <Form.Check
-                    type="radio"
-                    id="crypto-radio"
-                    label={<><BsWallet /> Dompet Crypto (IDRX)</>}
-                    name="paymentMethod"
-                    value="crypto"
-                    checked={paymentMethod === 'crypto'}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
                 </div>
               </Col>
             </Row>

@@ -4,25 +4,105 @@ import { useState, useEffect } from 'react';
 import { Container, Row, Col, Nav, Tab, Card, Button, Badge } from 'react-bootstrap';
 import { FaUser, FaHistory, FaGift, FaCog, FaSignOutAlt, FaCamera } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import axios from 'axios'; // Import axios untuk koneksi API
 
 export default function Dashboard() {
-  const [userInfo, setUserInfo] = useState(null);
-  const [activeTab, setActiveTab] = useState('overview');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const [editProfileData, setEditProfileData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    password: '' // Untuk perubahan kata sandi
+  });
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [token, setToken] = useState(null);
 
-  useEffect(() => {
-    // Check if user is logged in
-    const token = localStorage.getItem('authToken');
-    const user = localStorage.getItem('userInfo');
 
-    if (token && user) {
-      setIsLoggedIn(true);
-      setUserInfo(JSON.parse(user));
-    } else {
-      // Redirect to login if not authenticated
-      window.location.href = '/';
-    }
-  }, []);
+  useEffect(() => {
+  const authToken = localStorage.getItem('authToken');
+  const userJson = localStorage.getItem('userInfo');
+
+  if (authToken && userJson) {
+    setIsLoggedIn(true);
+    setToken(authToken);
+
+    const user = JSON.parse(userJson);
+    setUserInfo(user);
+
+    // FIX: selalu pakai fallback string '' (bukan undefined)
+    setEditProfileData({
+      name: user.name || '',
+      email: user.email || '',
+      phone: user.phone || '',
+      address: user.address || '',
+      password: ''
+    });
+
+  } else {
+    window.location.href = '/';
+  }
+}, []);
+  
+  // Fungsi untuk menangani perubahan input form
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditProfileData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Fungsi untuk menyimpan perubahan profil ke database
+  // Fungsi untuk menyimpan perubahan profil ke database
+const handleSaveProfile = async () => {
+    if (isSaving) return;
+
+    // Validasi sederhana (diperkuat)
+    if (!editProfileData.name) {
+      toast.error('Nama wajib diisi.');
+      return;
+    }
+    
+    // Data yang akan dikirim (diperjelas)
+    const dataToUpdate = {
+      name: editProfileData.name,
+      phone: editProfileData.phone,
+      address: editProfileData.address,
+      // email: editProfileData.email // BARIS INI DIHAPUS
+    };
+    
+    // Jika password diisi, tambahkan ke payload
+    if (editProfileData.password) {
+      dataToUpdate.password = editProfileData.password;
+    }
+
+    setIsSaving(true);
+    
+    try {
+      // Pastikan URL API menggunakan variabel lingkungan yang benar
+      const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000'}/api/auth/profile`;
+      
+      const response = await axios.put(apiUrl, dataToUpdate, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // ... (Update state dan localStorage)
+      localStorage.setItem('userInfo', JSON.stringify(response.data));
+      setUserInfo(response.data)
+
+      toast.success('Profil berhasil diperbarui!');
+
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      // Tampilkan error yang lebih spesifik untuk membantu debugging
+      const errorMessage = error.response?.data?.message || `Gagal menyimpan profil: ${error.message}. Cek backend URL Anda.`;
+      toast.error(errorMessage);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
@@ -190,25 +270,9 @@ export default function Dashboard() {
                     <Card.Body className="p-4">
                       <h4 className="mb-4 d-flex align-items-center">
                         <FaCog className="text-primary me-3" size={24} />
-                        Pengaturan Akun
+                        Settings
                       </h4>
                       <Row className="g-4">
-                        <Col lg={4}>
-                          <Card className="profile-card border-0 shadow-sm">
-                            <Card.Body className="text-center p-4">
-                              <div className="profile-avatar mb-3">
-                                <div className="avatar-circle mx-auto mb-3">
-                                  <FaUser size={48} className="text-muted" />
-                                </div>
-                                <Button variant="outline-primary" size="sm" className="mb-2">
-                                  <FaCamera className="me-2" />
-                                  Ubah Foto
-                                </Button>
-                                <p className="text-muted small mb-0">Upload foto profil</p>
-                              </div>
-                            </Card.Body>
-                          </Card>
-                        </Col>
                         <Col lg={8}>
                           <Card className="profile-form border-0 shadow-sm">
                             <Card.Body className="p-4">
@@ -219,7 +283,9 @@ export default function Dashboard() {
                                   type="text"
                                   className="form-control"
                                   placeholder="Masukkan nama lengkap"
-                                  defaultValue={userInfo?.name || ''}
+                                  name="name"
+                                  value={editProfileData.name}
+                                  onChange={handleChange}
                                 />
                               </div>
                               <div className="mb-3">
@@ -228,8 +294,13 @@ export default function Dashboard() {
                                   type="email"
                                   className="form-control"
                                   placeholder="email@example.com"
-                                  defaultValue={userInfo?.email || ''}
+                                  value={userInfo?.email || ''}
+                                  name="email"
+                                  onChange={handleChange}
+                                  readOnly 
+                                  disabled={true}
                                 />
+                                <div className="form-text">Email tidak dapat diubah</div>
                               </div>
                               <div className="mb-3">
                                 <label className="form-label fw-bold">Nomor Telepon</label>
@@ -237,7 +308,9 @@ export default function Dashboard() {
                                   type="tel"
                                   className="form-control"
                                   placeholder="+62-"
-                                  defaultValue={userInfo?.phone || ''}
+                                  name="phone"
+                                  value={editProfileData.phone}
+                                  onChange={handleChange}
                                 />
                               </div>
                               <div className="mb-4">
@@ -246,11 +319,13 @@ export default function Dashboard() {
                                   className="form-control"
                                   rows={3}
                                   placeholder="Masukkan alamat lengkap..."
-                                  defaultValue={userInfo?.address || ''}
+                                  name="address"
+                                  value={editProfileData.address}
+                                  onChange={handleChange}
                                 />
                               </div>
-                              <Button variant="primary" className="px-4">
-                                Simpan Perubahan
+                              <Button variant="primary" className="px-4" onClick={handleSaveProfile} disabled={isSaving}>
+                                {isSaving ? 'Menyimpan...' : 'Simpan Perubahan'}
                               </Button>
                             </Card.Body>
                           </Card>

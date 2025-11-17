@@ -18,7 +18,7 @@ export default function Pricing() {
 
                 {/* --- HARGA DIPERBARUI ke IDRX --- */}
                 <div className="pricing-card-price">
-                  100 <span className="period">IDRX</span>
+                  25.000 <span className="period">IDR</span>
                 </div>
 
                 <ul className="pricing-list">
@@ -26,9 +26,6 @@ export default function Pricing() {
                   <li>Kirim Masukan</li>
                   <li>Request Menu Khusus</li>
                 </ul>
-                <Button variant="" className="btn-brand-primary" onClick={() => window.location.href = '/membership'}>
-                  Langganan Sekarang
-                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -41,7 +38,7 @@ export default function Pricing() {
 
                 {/* --- HARGA DIPERBARUI ke IDRX --- */}
                 <div className="pricing-card-price">
-                  500 <span className="period">IDRX</span>
+                  75.000 <span className="period">IDR</span>
                 </div>
 
                 <ul className="pricing-list">
@@ -51,11 +48,6 @@ export default function Pricing() {
                   <li>Menu Custom</li>
                   <li>Layanan Prioritas</li>
                 </ul>
-
-                {/* --- TOMBOL DIPERBARUI --- */}
-                <Button variant="" className="btn-brand-primary" onClick={() => window.location.href = '/membership'}>
-                  Langganan Sekarang
-                </Button>
 
               </Card.Body>
             </Card>
@@ -69,7 +61,7 @@ export default function Pricing() {
 
                 {/* --- HARGA DIPERBARUI ke IDRX --- */}
                 <div className="pricing-card-price">
-                  250 <span className="period">IDRX</span>
+                  50.000<span className="period">IDR</span>
                 </div>
 
                 <ul className="pricing-list">
@@ -78,9 +70,6 @@ export default function Pricing() {
                   <li>Request Menu Khusus</li>
                   <li>Layanan Prioritas</li>
                 </ul>
-                <Button variant="" className="btn-brand-primary" onClick={() => window.location.href = '/membership'}>
-                  Langganan Sekarang
-                </Button>
               </Card.Body>
             </Card>
           </Col>
