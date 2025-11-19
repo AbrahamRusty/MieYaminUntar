@@ -5,25 +5,24 @@ import { Container, Nav, Navbar, Button, Dropdown } from 'react-bootstrap';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { FaWallet, FaSignOutAlt, FaGoogle, FaUser, FaTrophy, FaCoins, FaCrown } from 'react-icons/fa';
-import { useAccount, useDisconnect } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/wagmi/react';
+import { FaSignInAlt, FaUserPlus, FaUser, FaSignOutAlt, FaGoogle } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // For Google login state
-  const { address, isConnected } = useAccount();
-  const { disconnect } = useDisconnect();
-
-  // Only call useWeb3Modal after component has mounted
-  const { open } = mounted ? useWeb3Modal() : { open: () => {} };
 
   useEffect(() => {
-    setMounted(true);
+    // Check if user is logged in (you can implement this based on your auth system)
+    const checkLoginStatus = () => {
+      // This would typically check localStorage, cookies, or make an API call
+      const token = localStorage.getItem('authToken');
+      setIsLoggedIn(!!token);
+    };
+
+    checkLoginStatus();
   }, []);
 
   const handleNavClick = (hash) => {
@@ -49,38 +48,19 @@ export default function Header() {
     }
   };
 
-  const handleWalletLogin = async () => {
-    if (!mounted) return;
-
-    setIsLoading(true);
-    try {
-      await open();
-      // Modal will close automatically when wallet connects
-    } catch (error) {
-      console.error('Wallet connection error:', error);
-      toast.error('Gagal koneksi wallet');
-      setIsLoading(false);
-    } finally {
-      // Reset loading state after a short delay
-      setTimeout(() => setIsLoading(false), 1000);
-    }
-  };
-
-  const handleDisconnect = () => {
-    disconnect();
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
     setIsLoggedIn(false);
+    toast.success('Berhasil logout');
+    router.push('/');
   };
 
   const handleOpenDashboard = () => {
     router.push('/dashboard');
   };
 
-  const handleShowLoyaltyPoints = () => {
-    toast('Loyalty Points: 0 points');
-  };
-
-  const handleShowCurrentTier = () => {
-    toast('Current Tier: No Membership');
+  const handleOpenRegister = () => {
+    router.push('/register');
   };
 
   const isPricingPage = pathname === '/pricing';
@@ -113,14 +93,14 @@ export default function Header() {
                 Contact
               </Nav.Link>
 
-              {/* Dashboard Dropdown - Show when connected */}
-              {(isConnected || isLoggedIn) && !isPricingPage && (
+              {/* Dashboard Dropdown - Show when logged in */}
+              {isLoggedIn && !isPricingPage && (
                 <Dropdown className="ms-2 me-3">
                   <Dropdown.Toggle
                     variant=""
                     className="btn-outline-primary d-flex align-items-center gap-2"
                   >
-                    <FaTrophy />
+                    <FaUser />
                     Dashboard
                   </Dropdown.Toggle>
 
@@ -129,80 +109,47 @@ export default function Header() {
                       onClick={handleOpenDashboard}
                       className="d-flex align-items-center gap-2"
                     >
-                      <FaTrophy />
+                      <FaUser />
                       Open Dashboard
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={handleShowLoyaltyPoints}
-                      className="d-flex align-items-center gap-2"
-                    >
-                      <FaCoins />
-                      Loyalty Points
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={handleShowCurrentTier}
-                      className="d-flex align-items-center gap-2"
-                    >
-                      <FaCrown />
-                      Current Tier
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               )}
 
-              {/* 3. Dropdown untuk Connect Wallet */}
+              {/* Login/Register Buttons */}
               {!isPricingPage && (
-                <Dropdown className="ms-3">
-                  <Dropdown.Toggle
-                    variant=""
-                    className="btn-brand-primary d-flex align-items-center gap-2"
-                    disabled={isLoading}
-                  >
-                    {isConnected ? (
-                      <>
-                        <FaSignOutAlt />
-                        {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Disconnect'}
-                      </>
-                    ) : (
-                      <>
-                        <FaWallet />
-                        Connect Wallet
-                      </>
-                    )}
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu align="end" className="shadow">
-                    {!isConnected ? (
-                      <>
-                        <Dropdown.Item
-                          onClick={handleGoogleLogin}
-                          disabled={isLoading}
-                          className="d-flex align-items-center gap-2"
-                        >
-                          <FaGoogle />
-                          Masuk dengan Google
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item
-                          onClick={handleWalletLogin}
-                          disabled={isLoading}
-                          className="d-flex align-items-center gap-2"
-                        >
-                          <FaWallet />
-                          Masuk dengan Wallet
-                        </Dropdown.Item>
-                      </>
-                    ) : (
-                      <Dropdown.Item
-                        onClick={handleDisconnect}
-                        className="d-flex align-items-center gap-2 text-danger"
+                <div className="d-flex gap-2">
+                  {!isLoggedIn ? (
+                    <>
+                      <Button
+                        variant="outline-primary"
+                        className="d-flex align-items-center gap-2"
+                        onClick={handleGoogleLogin}
+                        disabled={isLoading}
                       >
-                        <FaSignOutAlt />
-                        Disconnect Wallet
-                      </Dropdown.Item>
-                    )}
-                  </Dropdown.Menu>
-                </Dropdown>
+                        <FaGoogle />
+                        Login
+                      </Button>
+                      <Button
+                        variant=""
+                        className="btn-brand-primary d-flex align-items-center gap-2"
+                        onClick={handleOpenRegister}
+                      >
+                        <FaUserPlus />
+                        Register
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      variant="outline-danger"
+                      className="d-flex align-items-center gap-2"
+                      onClick={handleLogout}
+                    >
+                      <FaSignOutAlt />
+                      Logout
+                    </Button>
+                  )}
+                </div>
               )}
 
             </Nav>

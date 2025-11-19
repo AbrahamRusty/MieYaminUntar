@@ -1,35 +1,24 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs'); // Untuk mengenkripsi password
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true
-  },
-  googleId: String,
-  walletAddress: {
-    type: String,
-    lowercase: true,
-    sparse: true
-  },
-  name: String,
-  avatar: String,
-  isEmailVerified: {
-    type: Boolean,
-    default: false
-  },
-  membershipTier: {
-    type: String,
-    enum: ['none', 'silver', 'gold', 'platinum'],
-    default: 'none'
-  },
-  membershipTokenId: Number,
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  lastLogin: Date
+const UserSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    phone: { type: String, required: true },
+    // BARU: Tambahkan field address
+    address: { type: String, default: '' },
+    password: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('User', userSchema);
+// Middleware untuk mengenkripsi password sebelum disimpan (biarkan tetap sama)
+UserSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
+
+module.exports = mongoose.model('User', UserSchema);

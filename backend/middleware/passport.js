@@ -1,76 +1,43 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
+const jwt = require('jsonwebtoken'); 
 
-// Serialize user for session
-passport.serializeUser((user, done) => {
-  done(null, user._id);
-});
+// ... (Serialize user, Deserialize user, Google OAuth Strategy tetap sama)
 
-// Deserialize user from session
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id);
-    done(null, user);
-  } catch (error) {
-    done(error, null);
-  }
-});
+// FUNGSI protect: Middleware untuk memverifikasi Token JWT
+const protect = async (req, res, next) => {
+    let token;
 
-// Google OAuth Strategy - Only initialize if credentials are available
-if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
-  passport.use(new GoogleStrategy({
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/auth/google/callback`
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        // Check if user already exists
-        let user = await User.findOne({ googleId: profile.id });
+    // 1. Cek token di header Authorization (Format: Bearer <token>)
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        try {
+            token = req.headers.authorization.split(' ')[1];
 
-        if (user) {
-          // Update user info
-          user.name = profile.displayName;
-          user.email = profile.emails[0].value;
-          user.googleProfile = profile;
-          user.lastLogin = new Date();
-          await user.save();
-          return done(null, user);
-        }
+            // 2. Verifikasi token menggunakan secret key
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Check if user exists with same email
-        user = await User.findOne({ email: profile.emails[0].value });
+            // 3. Ambil data user dari database (kecuali password) dan lampirkan ke req.user
+            req.user = await User.findById(decoded.id).select('-password');
 
-        if (user) {
-          // Link Google account to existing user
-          user.googleId = profile.id;
-          user.name = profile.displayName;
-          user.googleProfile = profile;
-          user.lastLogin = new Date();
-          await user.save();
-          return done(null, user);
-        }
+            if (!req.user) {
+                return res.status(401).json({ message: 'Token tidak valid, user tidak ditemukan.' });
+            }
 
-        // Create new user
-        user = new User({
-          googleId: profile.id,
-          name: profile.displayName,
-          email: profile.emails[0].value,
-          googleProfile: profile,
-          isEmailVerified: true,
-          lastLogin: new Date()
-        });
+            next(); 
+            return; // ⬅️ PERBAIKAN KRITIS: Hentikan eksekusi setelah memanggil next()
+        } catch (error) {
+            console.error("JWT Verification Error:", error.message);
+            // Jika token tidak valid, expired, atau gagal diverifikasi
+            return res.status(401).json({ message: 'Tidak terotentikasi, token gagal atau kadaluarsa.' });
+        }
+    }
 
-        await user.save();
-        return done(null, user);
-      } catch (error) {
-        return done(error, null);
-      }
-    }
-  ));
-} else {
-  console.warn('Google OAuth credentials not found. Google login will be disabled.');
-}
+    if (!token) {
+        return res.status(401).json({ message: 'Tidak terotentikasi, tidak ada token.' });
+    }
+};
 
-module.exports = passport;
+
+// --- PERUBAHAN EXPORT: Export passport DAN protect ---
+module.exports = { passport, protect };
