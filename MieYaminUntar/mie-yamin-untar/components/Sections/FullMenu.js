@@ -11,37 +11,37 @@ const menuItems = [
     title: 'Mie Yamin Original',
     description: 'Mie klasik dengan ayam kecap manis',
     price: 'Rp18.000',
-    imageUrl: '/menu/mie-original.png', // Ganti path gambar
+    imageUrl: '/menu/mie/mie-original.png',
   },
   {
     title: 'Mie Yamin Level 5',
     description: 'Pedas dan penuh rasa bagi para pecinta rempah',
     price: 'Rp20.000',
-    imageUrl: '/menu/mie-level-5.png', // Ganti path gambar
+    imageUrl: '/menu/mie/mie-level-5.png',
   },
   {
-    title: 'Mie Yamin Complete',
+    title: 'Mie Yamin Complete',  
     description: 'Includes chicken, dumplings, meatballs, and sambal',
     price: 'Rp25.000',
-    imageUrl: '/menu/mie-complete.png', // Ganti path gambar
+    imageUrl: '/menu/mie/mie-complete.png',
   },
   {
-    title: 'Pangsit Goreng (5 pcs)',
-    description: 'Renyah dan gurih',
-    price: 'Rp10.000',
-    imageUrl: '/menu/pangsit-goreng.png', // Ganti path gambar
+    title: 'Mie Yamin jamur',  
+    description: 'Mie klasik dengan ayam kecap manis dan jamur',
+    price: 'Rp25.000',
+    imageUrl: '/menu/mie/mie_yamin_jamur.jpg',
   },
+  {
+      title: 'Bihun Goreng',
+      description: 'Bihun goreng spesial dengan sayuran segar',
+      price: 'Rp17.000',
+      imageUrl: '/menu/bihun/bihun_goreng.webp',
+    },
   {
     title: 'Es Teh',
     description: 'Teman minum yang sempurna',
     price: 'Rp5.000',
     imageUrl: '/menu/es-teh.png', // Ganti path gambar
-  },
-  {
-    title: 'Menu Lain',
-    description: 'Deskripsi menu lain',
-    price: 'Rp15.000',
-    imageUrl: '/menu/default.png', // Ganti path gambar
   },
 ];
 

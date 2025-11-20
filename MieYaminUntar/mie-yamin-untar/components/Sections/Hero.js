@@ -138,7 +138,7 @@ export default function Hero() {
                 Gabung Program Loyalitas
               </Button>
             </Link>
-            <Link href="/menu" passHref>
+            <Link href="/all-menu" passHref>
               <Button
                 variant=""
                 className="btn-brand-secondary btn-lg px-4"
@@ -172,7 +172,7 @@ export default function Hero() {
         <Col lg={6}>
           <div ref={imageRef} className="image-container">
             <Image
-              src="/mie-yamin-hero-baru.png" // Ganti dengan path gambar mie Anda
+              src="/menu/mie/mie-yamin-hero-baru.png" // Ganti dengan path gambar mie Anda
               alt="Mie Yamin Lezat"
               width={600}
               height={600}
