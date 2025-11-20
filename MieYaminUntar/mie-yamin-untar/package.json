@@ -1,0 +1,36 @@
+{
+  "name": "mie-yamin-untar",
+  "version": "1.0.0",
+  "description": "Website UMKM Mie Yamin Untar",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@web3modal/wagmi": "^4.2.3",
+    "axios": "^1.7.9",
+    "bootstrap": "^5.3.2",
+    "ethers": "^6.13.4",
+    "framer-motion": "^12.23.24",
+    "gsap": "^3.13.0",
+    "mongodb": "^7.0.0",
+    "next": "13.5.6",
+    "react": "18.2.0",
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "18.2.0",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.5.0",
+    "viem": "^2.21.7",
+    "wagmi": "^2.12.25"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "@vitejs/plugin-react-swc": "^4.2.1",
+    "eslint": "8.52.0",
+    "eslint-config-next": "13.5.6",
+    "vite": "^7.2.2"
+  }
+}
