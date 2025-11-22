@@ -1,23 +1,23 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Logs
+logs
+*.log
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# Dependency directories
+node_modules/
 
-# testing
-/coverage
+# npm debug log
+npm-debug.log
 
-# next.js
-/.next/
-/out/
+# dotenv environment variables file
+.env
 
-# production
+# VSCode settings folder
+.vscode/
+
+# Next.js build output
+.next/
+
+# Yarn error logs
 /build
 
 # misc

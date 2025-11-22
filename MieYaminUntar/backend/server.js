@@ -70,10 +70,13 @@ db.on('reconnected', () => {
   console.log("Mongoose reconnected to DB");
 });
 
+const menuRoutes = require('../../backend/routes/menu');
+
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/loyalty", require("./routes/loyalty"));
 app.use("/api/admin", require("./routes/admin"));
+app.use('/api', menuRoutes);
 
 // Health check
 app.get("/health", (req, res) => {
@@ -81,6 +84,19 @@ app.get("/health", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
+
+// Log all registered routes for debugging
+app._router.stack.forEach((middleware) => {
+  if (middleware.route) { // routes registered directly on the app
+    console.log('Route:', middleware.route.path);
+  } else if (middleware.name === 'router') { // router middleware
+    middleware.handle.stack.forEach((handler) => {
+      const route = handler.route;
+      route && console.log('Route:', route.path);
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
