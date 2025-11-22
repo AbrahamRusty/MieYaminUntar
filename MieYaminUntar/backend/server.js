@@ -50,9 +50,30 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/mie-yamin
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.error("MongoDB connection error:", err));
 
+// Add mongoose connection event listeners for better diagnostics
+const db = mongoose.connection;
+
+db.on('connected', () => {
+  console.log("Mongoose connected to DB");
+});
+
+db.on('error', (err) => {
+  console.error("Mongoose connection error:", err);
+});
+
+db.on('disconnected', () => {
+  console.warn("Mongoose disconnected from DB");
+});
+
+// Optional: Reconnect on disconnect
+db.on('reconnected', () => {
+  console.log("Mongoose reconnected to DB");
+});
+
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/loyalty", require("./routes/loyalty"));
+app.use("/api/admin", require("./routes/admin"));
 
 // Health check
 app.get("/health", (req, res) => {
