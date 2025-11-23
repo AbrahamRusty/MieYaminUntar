@@ -4,15 +4,20 @@ import { useState } from 'react';
 import { Container, Row, Col, Nav, Tab, Card, Button, Badge } from 'react-bootstrap';
 import { FaWallet, FaHistory, FaGift, FaCrown, FaArrowUp, FaCoins, FaStar, FaUser, FaCamera } from 'react-icons/fa';
 import { useWallet } from '@/hooks/useWallet';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 import { useMembership } from '@/hooks/useMembership';
 import toast from 'react-hot-toast';
 
 export default function Dashboard() {
   const { account, isConnected, connectWallet } = useWallet();
-  const { membershipInfo, idrxBalance, buyMembership, getTierBenefits, isLoading } = useMembership();
+  const { user } = useAuth();
+  const router = useRouter();
+  const { membershipInfo, idrxBalance, buyMembership, getTierBenefits, isLoading, loadMembershipData } = useMembership();
   const [activeTab, setActiveTab] = useState('overview');
+  const [membershipPayment, setMembershipPayment] = useState({});
 
-  if (!isConnected) {
+  if (!isConnected && !user) {
     return (
       <div className="dashboard-section py-5" style={{ minHeight: '80vh' }}>
         <Container>
@@ -32,6 +37,9 @@ export default function Dashboard() {
                   <FaWallet className="me-2" />
                   Connect Wallet
                 </Button>
+                <div className="mt-3">
+                  <Button variant="outline-primary" className="me-2" onClick={() => router.push('/auth')}>Login / Register</Button>
+                </div>
               </div>
             </Col>
           </Row>
@@ -41,9 +49,54 @@ export default function Dashboard() {
   }
 
   const handleBuyMembership = async (tier) => {
-    const success = await buyMembership(tier);
-    if (success) {
-      toast.success(`Membership ${tier} berhasil dibeli!`);
+    const mp = membershipPayment[tier] || { method: 'idrx', proof: null };
+
+    // IDRX on-chain flow (existing)
+    if (mp.method === 'idrx') {
+      const success = await buyMembership(tier);
+      if (success) {
+        toast.success(`Membership ${tier} berhasil dibeli dengan IDRX!`);
+      }
+      return;
+    }
+
+    // Wallet flow: simulate web3 transaction (dummy)
+    if (mp.method === 'wallet') {
+      if (!isConnected) {
+        toast('Silakan hubungkan wallet untuk membayar dengan dompet crypto', { icon: '🦊' });
+        await connectWallet();
+        return;
+      }
+
+      toast.loading('Memproses transaksi wallet (dummy)...');
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        toast.success(`Pembayaran membership ${tier} via wallet berhasil (dummy).`);
+        // Try reloading membership data if wallet connected
+        try { await loadMembershipData(); } catch (e) { /* ignore */ }
+      } catch (e) {
+        toast.error('Transaksi wallet gagal');
+      }
+      return;
+    }
+
+    // Bank transfer flow: require proof upload
+    if (mp.method === 'bank') {
+      if (!mp.proof) {
+        toast.error('Silakan upload bukti transfer untuk pembayaran membership');
+        return;
+      }
+
+      // Simulate upload and verification
+      toast.loading('Mengunggah bukti transfer...');
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        toast.success(`Pembayaran membership ${tier} via bank diterima (dummy).`);
+        try { await loadMembershipData(); } catch (e) { /* ignore */ }
+      } catch (e) {
+        toast.error('Gagal memproses bukti transfer');
+      }
+      return;
     }
   };
 
@@ -232,6 +285,56 @@ export default function Dashboard() {
                     </li>
                   )}
                 </ul>
+
+                <div className="mb-3">
+                  <label className="form-label small fw-bold">Metode Pembayaran</label>
+                  <div className="d-flex gap-2 mb-2">
+                    <div>
+                      <input
+                        type="radio"
+                        name={`pay-${tier}`}
+                        id={`pay-${tier}-idrx`}
+                        value="idrx"
+                        checked={(membershipPayment[tier]?.method || 'idrx') === 'idrx'}
+                        onChange={() => setMembershipPayment(prev => ({ ...prev, [tier]: { ...(prev[tier]||{}), method: 'idrx' } }))}
+                      />
+                      <label className="ms-1">IDRX</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        name={`pay-${tier}`}
+                        id={`pay-${tier}-wallet`}
+                        value="wallet"
+                        checked={(membershipPayment[tier]?.method || '') === 'wallet'}
+                        onChange={() => setMembershipPayment(prev => ({ ...prev, [tier]: { ...(prev[tier]||{}), method: 'wallet' } }))}
+                      />
+                      <label className="ms-1">Web3 Wallet</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        name={`pay-${tier}`}
+                        id={`pay-${tier}-bank`}
+                        value="bank"
+                        checked={(membershipPayment[tier]?.method || '') === 'bank'}
+                        onChange={() => setMembershipPayment(prev => ({ ...prev, [tier]: { ...(prev[tier]||{}), method: 'bank' } }))}
+                      />
+                      <label className="ms-1">Bank Transfer</label>
+                    </div>
+                  </div>
+
+                  {membershipPayment[tier]?.method === 'bank' && (
+                    <div>
+                      <label className="form-label small">Upload Bukti Transfer (screenshot)</label>
+                      <input type="file" accept="image/*" className="form-control" onChange={(e) => {
+                        const file = e.target.files && e.target.files[0] ? e.target.files[0] : null;
+                        setMembershipPayment(prev => ({ ...prev, [tier]: { ...(prev[tier]||{}), proof: file } }));
+                      }} />
+                      {membershipPayment[tier]?.proof && <small className="text-muted">File: {membershipPayment[tier].proof.name}</small>}
+                    </div>
+                  )}
+                </div>
 
                 <Button
                   variant=""

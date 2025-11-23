@@ -5,6 +5,7 @@ import { Container, Nav, Navbar, Button, Dropdown } from 'react-bootstrap';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import { FaWallet, FaSignOutAlt, FaGoogle, FaUser, FaTrophy, FaCoins, FaCrown } from 'react-icons/fa';
 import { useAccount, useDisconnect } from 'wagmi';
 import { useWeb3Modal } from '@web3modal/wagmi/react';
@@ -15,9 +16,9 @@ export default function Header() {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // For Google login state
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
+  const { user, logout: authLogout } = useAuth();
 
   // Only call useWeb3Modal after component has mounted
   const { open } = mounted ? useWeb3Modal() : { open: () => {} };
@@ -68,7 +69,10 @@ export default function Header() {
 
   const handleDisconnect = () => {
     disconnect();
-    setIsLoggedIn(false);
+  };
+
+  const handleAuthLogout = () => {
+    authLogout();
   };
 
   const handleOpenDashboard = () => {
@@ -113,8 +117,8 @@ export default function Header() {
                 Contact
               </Nav.Link>
 
-              {/* Dashboard Dropdown - Show when connected */}
-              {(isConnected || isLoggedIn) && !isPricingPage && (
+              {/* Dashboard Dropdown - Show when connected (wallet OR auth) */}
+              {(isConnected || user) && !isPricingPage && (
                 <Dropdown className="ms-2 me-3">
                   <Dropdown.Toggle
                     variant=""
@@ -150,6 +154,14 @@ export default function Header() {
                 </Dropdown>
               )}
 
+              {/* If logged in via local auth, show greeting */}
+              {user && (
+                <div className="me-3 d-none d-lg-flex align-items-center">
+                  <span className="fw-semibold">Hi, {user.name}</span>
+                  <Button variant="link" className="ms-3 p-0 small" onClick={handleAuthLogout}>Logout</Button>
+                </div>
+              )}
+
               {/* 3. Dropdown untuk Connect Wallet */}
               {!isPricingPage && (
                 <Dropdown className="ms-3">
@@ -181,6 +193,13 @@ export default function Header() {
                         >
                           <FaGoogle />
                           Masuk dengan Google
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => router.push('/auth')}
+                          className="d-flex align-items-center gap-2"
+                        >
+                          <FaUser />
+                          Login / Register
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item

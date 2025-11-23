@@ -4,13 +4,17 @@ import { Modal, Button, Row, Col, Form, Badge } from 'react-bootstrap';
 import { BsTrash, BsPlus, BsDash, BsCreditCard, BsWallet, BsTruck, BsShop } from 'react-icons/bs';
 import { useState } from 'react';
 import { useCart } from '@/contexts/CartContext';
+import { useWallet } from '@/hooks/useWallet';
 import toast from 'react-hot-toast';
 
 export default function CartModal({ show, onHide }) {
   const { cart, removeFromCart, updateQuantity, getTotalPrice, clearCart } = useCart();
+  const { isConnected: walletConnected, connectWallet } = useWallet();
   const [paymentMethod, setPaymentMethod] = useState('qris');
   const [deliveryMethod, setDeliveryMethod] = useState('pickup');
   const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [selectedBank, setSelectedBank] = useState('bca');
+  const [transferProof, setTransferProof] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const totalPrice = getTotalPrice();
@@ -21,13 +25,46 @@ export default function CartModal({ show, onHide }) {
       return;
     }
 
+    if (paymentMethod === 'bank' && !transferProof) {
+      toast.error('Silakan upload bukti transfer untuk metode Bank Transfer');
+      return;
+    }
+
+    // Handle crypto via wallet: require wallet connection and simulate on-chain tx
+    if (paymentMethod === 'crypto') {
+      if (!walletConnected) {
+        toast('Silakan hubungkan wallet untuk membayar dengan dompet crypto', { icon: '🦊' });
+        // Try to open wallet connect
+        await connectWallet();
+        return;
+      }
+
+      setIsProcessing(true);
+      try {
+        toast.loading('Memproses transaksi on-chain (dummy)...');
+        // Simulate on-chain transaction delay
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        toast.success('Transaksi on-chain berhasil (dummy). Pesanan ditempatkan.');
+        clearCart();
+        onHide();
+      } catch (error) {
+        console.error(error);
+        toast.error('Transaksi on-chain gagal');
+      } finally {
+        setIsProcessing(false);
+      }
+
+      return;
+    }
+
+    // Non-crypto flows (qris / bank)
     setIsProcessing(true);
     try {
       // Simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 1200));
 
-      if (paymentMethod === 'crypto') {
-        toast.success('Pembayaran dengan dompet crypto dimulai!');
+      if (paymentMethod === 'bank') {
+        toast.success('Pembayaran via Bank Transfer diterima. Pesanan ditempatkan.');
       } else {
         toast.success('Pembayaran berhasil! Pesanan ditempatkan.');
       }
@@ -165,6 +202,15 @@ export default function CartModal({ show, onHide }) {
                     checked={paymentMethod === 'crypto'}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
+                  <Form.Check
+                    type="radio"
+                    id="bank-radio"
+                    label={<><BsCreditCard /> Bank Transfer</>}
+                    name="paymentMethod"
+                    value="bank"
+                    checked={paymentMethod === 'bank'}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
                 </div>
               </Col>
             </Row>
@@ -178,6 +224,41 @@ export default function CartModal({ show, onHide }) {
                     <img src="https://via.placeholder.com/200x200?text=QRIS+Barcode" alt="QRIS Barcode" style={{ width: '200px', height: '200px' }} />
                   </div>
                   <p className="mt-2">Scan kode QR ini dengan aplikasi e-wallet Anda</p>
+                </Col>
+              </Row>
+            )}
+
+            {/* Bank Transfer Section */}
+            {paymentMethod === 'bank' && (
+              <Row className="mt-3">
+                <Col xs={12}>
+                  <h6>Bank Transfer</h6>
+                  <Form.Group className="mb-2">
+                    <Form.Label>Pilih Bank</Form.Label>
+                    <Form.Select value={selectedBank} onChange={(e) => setSelectedBank(e.target.value)}>
+                      <option value="bca">BCA - 1234567890 (a.n. Mie Yamin Untar)</option>
+                      <option value="bni">BNI - 9876543210 (a.n. Mie Yamin Untar)</option>
+                      <option value="mandiri">Mandiri - 1122334455 (a.n. Mie Yamin Untar)</option>
+                    </Form.Select>
+                  </Form.Group>
+
+                  <div className="mb-3">
+                    <strong>Instruksi Pembayaran:</strong>
+                    <div className="mt-2">
+                      Silakan transfer ke rekening berikut, kemudian upload bukti transfer (screenshot) pada form di bawah.
+                    </div>
+                    <div className="mt-2">
+                      {selectedBank === 'bca' && (<div><strong>BCA</strong> - 1234567890</div>)}
+                      {selectedBank === 'bni' && (<div><strong>BNI</strong> - 9876543210</div>)}
+                      {selectedBank === 'mandiri' && (<div><strong>Mandiri</strong> - 1122334455</div>)}
+                    </div>
+                  </div>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Upload Bukti Transfer (screenshot)</Form.Label>
+                    <Form.Control type="file" accept="image/*" onChange={(e) => setTransferProof(e.target.files && e.target.files[0] ? e.target.files[0] : null)} />
+                    {transferProof && (<small className="text-muted">File siap diupload: {transferProof.name}</small>)}
+                  </Form.Group>
                 </Col>
               </Row>
             )}

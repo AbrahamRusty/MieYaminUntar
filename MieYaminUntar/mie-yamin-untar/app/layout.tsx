@@ -9,6 +9,7 @@ import Header from '@/components/Layout/Header';
 import FooterWrapper from '@/components/Layout/FooterWrapper';
 import { Web3ModalProvider } from '@/components/Web3Providers';
 import { CartProvider } from '@/contexts/CartContext';
+import { AuthProvider } from '@/contexts/AuthContext';
 import { AnimatePresence } from 'framer-motion';
 
 const inter = Inter({ subsets: ['latin'] }); // Next.js default, bisa dihapus jika hanya pakai Poppins
@@ -27,15 +28,17 @@ export default function RootLayout({
     <html lang="id">
       <body>
         <Web3ModalProvider>
-          <CartProvider>
-            <Header />
+          <AuthProvider>
+            <CartProvider>
+              <Header />
             <div style={{ paddingTop: '80px' }}>
               <AnimatePresence mode="wait">
                 <main>{children}</main>
               </AnimatePresence>
             </div>
             <FooterWrapper />
-          </CartProvider>
+            </CartProvider>
+          </AuthProvider>
         </Web3ModalProvider>
       </body>
     </html>

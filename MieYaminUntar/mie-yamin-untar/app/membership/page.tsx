@@ -233,6 +233,7 @@ export default function MembershipPage() {
           onHide={handleClosePaymentModal}
           tier={selectedTier.id}
           price={selectedTier.price}
+          method={selectedPaymentMethod?.id}
         />
       )}
 

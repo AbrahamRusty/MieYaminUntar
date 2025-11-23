@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 export default function BankTransferModal({ show, onHide, tier, price }) {
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+  const [proofFile, setProofFile] = useState(null);
 
   const bankAccount = {
     bank: 'BCA',
@@ -20,12 +21,18 @@ export default function BankTransferModal({ show, onHide, tier, price }) {
   };
 
   const handleConfirmPayment = () => {
+    if (!proofFile) {
+      alert('Silakan upload bukti transfer sebelum konfirmasi.');
+      return;
+    }
+
     // Simulate bank transfer confirmation
     setPaymentConfirmed(true);
     setTimeout(() => {
-      alert('Transfer berhasil dikonfirmasi! Membership telah aktif.');
+      alert('Transfer berhasil dikonfirmasi! Membership telah aktif. (dummy)');
       onHide();
       setPaymentConfirmed(false);
+      setProofFile(null);
     }, 2000);
   };
 
@@ -96,6 +103,11 @@ export default function BankTransferModal({ show, onHide, tier, price }) {
                   <li>Konfirmasi dan selesaikan transfer</li>
                   <li>Klik "Konfirmasi Pembayaran" setelah transfer berhasil</li>
                 </ol>
+                <div className="mt-3">
+                  <label className="form-label">Upload Bukti Transfer (screenshot)</label>
+                  <input type="file" accept="image/*" className="form-control" onChange={(e) => setProofFile(e.target.files && e.target.files[0] ? e.target.files[0] : null)} />
+                  {proofFile && <div className="mt-2"><small className="text-muted">File siap: {proofFile.name}</small></div>}
+                </div>
               </div>
             </>
           ) : (

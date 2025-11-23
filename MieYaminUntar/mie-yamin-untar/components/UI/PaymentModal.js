@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useMembership } from '@/hooks/useMembership';
 import toast from 'react-hot-toast';
 
-export default function PaymentModal({ show, onHide, tier, price }) {
+export default function PaymentModal({ show, onHide, tier, price, method = 'idrx' }) {
   const { buyMembership, isLoading } = useMembership();
   const [step, setStep] = useState(1); // 1: Confirm, 2: Approve, 3: Purchase, 4: Complete
   const [txHash, setTxHash] = useState('');
@@ -19,10 +19,34 @@ export default function PaymentModal({ show, onHide, tier, price }) {
   ];
 
   const handlePayment = async () => {
-    setStep(2);
+    // If method is wallet, simulate a successful web3 transaction (dummy)
+    if (method === 'wallet') {
+      setStep(2);
+      try {
+        // Simulate approve
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        setStep(3);
+        // Simulate purchase
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+        setStep(4);
+        // dummy tx hash
+        setTxHash('0x3456849e4g5h6j7k8l9m0n');
+        toast.success('Pembelian membership berhasil melalui Web3 Walletx!');
+        setTimeout(() => {
+          onHide();
+          setStep(1);
+        }, 1500);
+      } catch (err) {
+        console.error(err);
+        toast.error('Transaksi wallet gagal');
+        setStep(1);
+      }
+      return;
+    }
 
+    // Default: IDRX on-chain flow via buyMembership
+    setStep(2);
     try {
-      // This will handle both approval and purchase internally
       const success = await buyMembership(tier);
 
       if (success) {
@@ -33,7 +57,6 @@ export default function PaymentModal({ show, onHide, tier, price }) {
           setStep(1);
         }, 2000);
       } else {
-        // If payment fails due to insufficient balance, show error
         toast.error('Saldo IDRX tidak mencukupi atau transaksi gagal');
         setStep(1);
       }
