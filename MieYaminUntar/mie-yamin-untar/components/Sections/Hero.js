@@ -138,7 +138,7 @@ export default function Hero() {
                 Gabung Program Loyalitas
               </Button>
             </Link>
-            <Link href="/menu" passHref>
+            <Link href="/all-menu" passHref>
               <Button
                 variant=""
                 className="btn-brand-secondary btn-lg px-4"
