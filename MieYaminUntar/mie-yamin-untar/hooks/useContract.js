@@ -80,7 +80,9 @@ export function useContract(signer) {
 
   const purchaseMembership = async (tier) => {
     if (!loyaltyContract) {
-      toast.error('Kontrak loyalty belum terinisialisasi');
+      const msg = 'Kontrak loyalty belum terinisialisasi';
+      console.error('[useContract]', msg);
+      toast.error(msg);
       return null;
     }
 
@@ -92,19 +94,24 @@ export function useContract(signer) {
 
     const price = tierPrices[tier.toLowerCase()];
     if (!price) {
-      toast.error('Tier tidak valid');
+      const msg = 'Tier tidak valid: ' + tier;
+      console.error('[useContract]', msg);
+      toast.error(msg);
       return null;
     }
 
     setIsLoading(true);
     try {
+      console.log(`[useContract.purchaseMembership] Sending tx for tier=${tier}, price=${price.toString()}`);
       const tx = await loyaltyContract.purchaseMembership(tier, { value: price });
+      console.log(`[useContract.purchaseMembership] Tx sent: ${tx.hash}`);
       const receipt = await tx.wait();
+      console.log(`[useContract.purchaseMembership] Tx confirmed`, receipt);
       toast.success('Membership berhasil dibeli!');
       return receipt;
     } catch (error) {
-      console.error('Error purchasing membership:', error);
-      toast.error('Gagal membeli membership');
+      console.error('[useContract.purchaseMembership] Error:', error);
+      toast.error('Gagal membeli membership: ' + (error?.message || error));
       return null;
     } finally {
       setIsLoading(false);

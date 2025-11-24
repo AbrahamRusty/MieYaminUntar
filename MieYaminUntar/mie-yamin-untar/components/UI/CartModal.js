@@ -5,11 +5,15 @@ import { BsTrash, BsPlus, BsDash, BsCreditCard, BsWallet, BsTruck, BsShop } from
 import { useState } from 'react';
 import { useCart } from '@/contexts/CartContext';
 import { useWallet } from '@/hooks/useWallet';
+import web3 from '@/lib/web3';
+import backend from '@/lib/backend';
+import { useAuth } from '@/contexts/AuthContext';
 import toast from 'react-hot-toast';
 
 export default function CartModal({ show, onHide }) {
   const { cart, removeFromCart, updateQuantity, getTotalPrice, clearCart } = useCart();
-  const { isConnected: walletConnected, connectWallet } = useWallet();
+  const { isConnected: walletConnected, connectWallet, signer } = useWallet();
+  const { user } = useAuth();
   const [paymentMethod, setPaymentMethod] = useState('qris');
   const [deliveryMethod, setDeliveryMethod] = useState('pickup');
   const [deliveryAddress, setDeliveryAddress] = useState('');
@@ -30,26 +34,49 @@ export default function CartModal({ show, onHide }) {
       return;
     }
 
-    // Handle crypto via wallet: require wallet connection and simulate on-chain tx
+    // Handle crypto via wallet: require wallet connection and perform on-chain tx
     if (paymentMethod === 'crypto') {
-      if (!walletConnected) {
+      if (!walletConnected || !signer) {
         toast('Silakan hubungkan wallet untuk membayar dengan dompet crypto', { icon: '🦊' });
-        // Try to open wallet connect
         await connectWallet();
         return;
       }
 
       setIsProcessing(true);
       try {
-        toast.loading('Memproses transaksi on-chain (dummy)...');
-        // Simulate on-chain transaction delay
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        toast.success('Transaksi on-chain berhasil (dummy). Pesanan ditempatkan.');
-        clearCart();
-        onHide();
+        const demoAmount = process.env.NEXT_PUBLIC_CRYPTO_PAYMENT_AMOUNT_ETH || '0.001';
+        console.log(`[CartModal.crypto] Sending ETH payment: amount=${demoAmount}`);
+        toast.loading('Memproses transaksi on-chain...');
+        
+        const receipt = await web3.sendEtherPayment(signer, undefined, demoAmount);
+        console.log('[CartModal.crypto] Transaction receipt:', receipt);
+        
+        if (receipt) {
+          const txHash = receipt.transactionHash || receipt.hash || '';
+          console.log('[CartModal.crypto] Recording purchase on backend...');
+          
+          // send receipt to backend to record order
+          try {
+            await backend.createPurchaseRecord({
+              userId: user?.id || null,
+              method: 'crypto',
+              amount: demoAmount,
+              meta: { txHash, items: cart }
+            });
+            console.log('[CartModal.crypto] Purchase recorded');
+          } catch (e) {
+            console.warn('[CartModal.crypto] Failed to record purchase:', e);
+          }
+          
+          toast.success('Transaksi on-chain berhasil. Pesanan ditempatkan.');
+          clearCart();
+          onHide();
+        } else {
+          throw new Error('Receipt kosong atau transaksi gagal');
+        }
       } catch (error) {
-        console.error(error);
-        toast.error('Transaksi on-chain gagal');
+        console.error('[CartModal.crypto] Error:', error);
+        toast.error('Transaksi on-chain gagal: ' + (error.message || ''));
       } finally {
         setIsProcessing(false);
       }
@@ -64,8 +91,41 @@ export default function CartModal({ show, onHide }) {
       await new Promise(resolve => setTimeout(resolve, 1200));
 
       if (paymentMethod === 'bank') {
+        // upload proof and record
+        let proofUrl = null;
+        if (transferProof) {
+          try {
+            const up = await backend.uploadProof(transferProof);
+            proofUrl = up.fileUrl || null;
+          } catch (e) {
+            console.warn('Upload proof failed:', e);
+          }
+        }
+
+        try {
+          await backend.createPurchaseRecord({
+            userId: user?.id || null,
+            method: 'bank',
+            amount: totalPrice,
+            meta: { bank: selectedBank, proofUrl, items: cart }
+          });
+        } catch (e) {
+          console.warn('Failed to record bank purchase:', e);
+        }
+
         toast.success('Pembayaran via Bank Transfer diterima. Pesanan ditempatkan.');
       } else {
+        try {
+          await backend.createPurchaseRecord({
+            userId: user?.id || null,
+            method: 'qris',
+            amount: totalPrice,
+            meta: { items: cart }
+          });
+        } catch (e) {
+          console.warn('Failed to record QRIS purchase:', e);
+        }
+
         toast.success('Pembayaran berhasil! Pesanan ditempatkan.');
       }
 

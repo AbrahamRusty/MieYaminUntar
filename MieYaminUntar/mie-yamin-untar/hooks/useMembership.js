@@ -6,8 +6,8 @@ import { useContract } from './useContract';
 import toast from 'react-hot-toast';
 
 export function useMembership() {
-  const { account, isConnected } = useWallet();
-  const { getMembershipInfo, getIDRXBalance, purchaseMembership, approveIDRX } = useContract();
+  const { account, isConnected, signer } = useWallet();
+  const { getMembershipInfo, getIDRXBalance, purchaseMembership, approveIDRX } = useContract(signer);
   const [membershipInfo, setMembershipInfo] = useState(null);
   const [idrxBalance, setIdrxBalance] = useState('0');
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +65,7 @@ export function useMembership() {
     try {
       // Approve IDRX spending
       const approved = await approveIDRX(price);
-      if (!approved) return false;
+      if (!approved) return null;
 
       // Purchase membership
       const receipt = await purchaseMembership(tier);
@@ -73,9 +73,9 @@ export function useMembership() {
         toast.success(`Membership ${tier} berhasil dibeli!`);
         // Reload membership data
         await loadMembershipData();
-        return true;
+        return receipt;
       }
-      return false;
+      return null;
     } catch (error) {
       console.error('Error buying membership:', error);
       toast.error('Gagal membeli membership');

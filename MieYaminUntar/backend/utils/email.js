@@ -1,9 +1,17 @@
 const nodemailer = require('nodemailer');
 const sgMail = require('@sendgrid/mail');
 
-// Configure SendGrid
+// Configure SendGrid with a simple prefix check to give clearer errors
 if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const key = process.env.SENDGRID_API_KEY.trim();
+  if (!key.startsWith('SG.')) {
+    console.error('SENDGRID_API_KEY appears invalid: it should start with "SG.". Please set a valid SendGrid API key in backend/.env');
+  }
+  try {
+    sgMail.setApiKey(key);
+  } catch (e) {
+    console.error('Failed to set SendGrid API key:', e && e.message ? e.message : e);
+  }
 }
 
 // Fallback to nodemailer

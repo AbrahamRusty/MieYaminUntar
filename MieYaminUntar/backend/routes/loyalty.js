@@ -7,6 +7,53 @@ const Order = require('../models/Order');
 const Transaction = require('../models/Transaction');
 
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
+
+// Setup multer for uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'uploads'));
+  },
+  filename: function (req, file, cb) {
+    const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, unique + '-' + file.originalname);
+  }
+});
+const upload = multer({ storage });
+
+// Upload proof endpoint (no authentication required for simplicity)
+router.post('/upload-proof', upload.single('proof'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'File tidak ditemukan' });
+    const fileUrl = `${process.env.BACKEND_URL || ''}/uploads/${req.file.filename}`;
+    res.json({ success: true, fileUrl, filename: req.file.filename });
+  } catch (error) {
+    console.error('Upload proof error:', error);
+    res.status(500).json({ error: 'Gagal mengupload file' });
+  }
+});
+
+// Record purchase (store a purchase record in orders or transactions)
+router.post('/purchase', async (req, res) => {
+  try {
+    const { userId, method, amount, meta } = req.body;
+    // Create a transaction record
+    const tx = new Transaction({
+      userId: userId || null,
+      type: 'purchase',
+      amount: amount || 0,
+      token: method === 'crypto' ? 'ETH' : (meta && meta.token) || 'IDRX',
+      status: 'pending',
+      meta
+    });
+    await tx.save();
+    res.json({ success: true, txId: tx._id });
+  } catch (error) {
+    console.error('Purchase record error:', error);
+    res.status(500).json({ error: 'Gagal merekam pembelian' });
+  }
+});
 
 // Middleware to verify JWT
 const authenticate = (req, res, next) => {
@@ -92,8 +139,7 @@ router.post('/verify-payment', authenticate, async (req, res) => {
       return res.status(400).json({ error: 'Order sudah diproses' });
     }
 
-    // Verify transaction on blockchain (simplified)
-    // In production, use etherscan API or run your own node
+    // Verify transaction on blockchain with better checks
     const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
     const tx = await provider.getTransaction(txHash);
 
@@ -101,24 +147,78 @@ router.post('/verify-payment', authenticate, async (req, res) => {
       return res.status(400).json({ error: 'Transaksi tidak ditemukan' });
     }
 
-    // Check if transaction is to the correct contract and amount
-    // This is simplified - in production, verify the actual transfer
+    const paymentAddress = (process.env.PAYMENT_ADDRESS || process.env.PAYMENT_RECEIVER || '').toLowerCase();
+    const loyaltyContractAddress = (process.env.LOYALTY_CONTRACT_ADDRESS || process.env.LOYALTY_CONTRACT || '').toLowerCase();
+
+    let valid = false;
+
+    // If tx is a plain ETH transfer to the payment address, validate value
+    if (tx.to && tx.to.toLowerCase() === paymentAddress) {
+      const expected = ethers.parseEther(String(order.amount));
+      if (tx.value && tx.value.gte(expected)) valid = true;
+    }
+
+    // If tx is an ERC20 transfer to payment address (IDRX token)
+    const idrxTokenAddress = (process.env.IDRX_TOKEN_ADDRESS || process.env.IDRX_TOKEN || '').toLowerCase();
+    if (!valid && tx.to && tx.to.toLowerCase() === idrxTokenAddress) {
+      try {
+        const receipt = await provider.getTransactionReceipt(txHash);
+        if (receipt && receipt.logs && receipt.logs.length) {
+          const transferTopic = ethers.id('Transfer(address,address,uint256)');
+          for (const log of receipt.logs) {
+            if (log.address && log.address.toLowerCase() === idrxTokenAddress && log.topics && log.topics[0] === transferTopic) {
+              // topics[2] is 'to' (indexed)
+              const toTopic = log.topics[2];
+              const toAddress = '0x' + toTopic.slice(26);
+              if (toAddress.toLowerCase() === paymentAddress) {
+                // amount is in data
+                const amountBn = ethers.BigInt(log.data);
+                // assume IDRX has 18 decimals
+                const expectedUnits = ethers.parseUnits(String(order.amount), 18);
+                if (amountBn >= expectedUnits) {
+                  valid = true;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Error verifying ERC20 transfer logs:', e);
+      }
+    }
+
+    // If tx is a call to loyalty contract (purchaseMembership), accept it
+    if (!valid && tx.to && tx.to.toLowerCase() === loyaltyContractAddress) {
+      // Basic acceptance: we assume the loyalty contract call is the purchase
+      valid = true;
+    }
+
+    if (!valid) {
+      return res.status(400).json({ error: 'Transaksi tidak memenuhi syarat pembayaran' });
+    }
 
     // Mint NFT (call contract)
     const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
     const nftContract = new ethers.Contract(
       process.env.NFT_CONTRACT_ADDRESS,
-      ['function mintMembership(address,uint8,string)'],
+      ['function mintMembership(address,uint8,string)', 'function totalSupply() view returns (uint256)'],
       wallet
     );
 
     const tierIndex = { silver: 0, gold: 1, platinum: 2 }[order.tier];
-    const tokenURI = `${process.env.BASE_URI}/${order._id}`;
+    const tokenURI = `${process.env.BASE_URI || ''}/${order._id}`;
 
     const mintTx = await nftContract.mintMembership(tx.from, tierIndex, tokenURI);
     await mintTx.wait();
 
-    const tokenId = await nftContract.totalSupply() - 1; // Simplified
+    let tokenId = null;
+    try {
+      const total = await nftContract.totalSupply();
+      tokenId = total - 1;
+    } catch (e) {
+      console.warn('Could not fetch totalSupply for tokenId, leaving null', e);
+    }
 
     // Update order and user
     order.status = 'confirmed';

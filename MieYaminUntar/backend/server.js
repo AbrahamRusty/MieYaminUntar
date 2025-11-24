@@ -11,6 +11,8 @@ require("./middleware/passport");
 
 const app = express();
 
+const path = require('path');
+
 // Middleware
 app.use(helmet());
 app.use(cors({
@@ -18,6 +20,9 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+
+// Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Session middleware for passport
 app.use(session({
@@ -43,10 +48,8 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Database connection
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/mie-yamin-loyalty", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+// Connect to MongoDB (current driver ignores useNewUrlParser/useUnifiedTopology)
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/mie-yamin-loyalty")
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.error("MongoDB connection error:", err));
 
@@ -59,9 +62,34 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Start server with automatic port fallback if in use (tries up to 5 ports)
+const DEFAULT_PORT = parseInt(process.env.PORT || '5000', 10);
+const MAX_TRIES = 5;
+
+function startServer(port, triesLeft) {
+  const server = app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+
+  server.on('error', (err) => {
+    if (err && err.code === 'EADDRINUSE') {
+      console.warn(`Port ${port} is already in use.`);
+      if (triesLeft > 0) {
+        const nextPort = port + 1;
+        console.log(`Trying port ${nextPort} (${triesLeft - 1} attempts left)...`);
+        // small delay before retry
+        setTimeout(() => startServer(nextPort, triesLeft - 1), 300);
+        return;
+      }
+      console.error(`All fallback ports are in use. Kill the process using this port or set a different PORT env and restart.`);
+      console.error(`On macOS: lsof -iTCP:${port} -sTCP:LISTEN -n -P`);
+      process.exit(1);
+    }
+    console.error('Server error:', err);
+    process.exit(1);
+  });
+}
+
+startServer(DEFAULT_PORT, MAX_TRIES);
 
 module.exports = app;

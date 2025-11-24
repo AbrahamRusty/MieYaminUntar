@@ -11,6 +11,27 @@ const { sendOTP } = require('../utils/email');
 
 const router = express.Router();
 
+// Simple in-memory nonces store for wallet login (dev only)
+const nonces = new Map();
+
+// Get or create a nonce for a wallet address
+router.get('/wallet-nonce', async (req, res) => {
+  try {
+    const { address } = req.query;
+    if (!address) return res.status(400).json({ error: 'Address diperlukan' });
+
+    const lower = address.toLowerCase();
+    const nonce = (Math.floor(Math.random() * 1e9)).toString();
+    // store with expiry (10 minutes)
+    nonces.set(lower, { nonce, expiresAt: Date.now() + 10 * 60 * 1000 });
+
+    res.json({ nonce });
+  } catch (error) {
+    console.error('wallet-nonce error:', error);
+    res.status(500).json({ error: 'Gagal membuat nonce' });
+  }
+});
+
 // Generate JWT token
 const generateToken = (user) => {
   return jwt.encode({
@@ -138,13 +159,29 @@ router.post('/wallet-login', async (req, res) => {
       return res.status(400).json({ error: 'Alamat wallet tidak valid' });
     }
 
+    // Verify stored nonce
+    const lower = address.toLowerCase();
+    const stored = nonces.get(lower);
+    if (!stored || stored.nonce !== nonce || stored.expiresAt < Date.now()) {
+      return res.status(400).json({ error: 'Nonce tidak valid atau kadaluarsa' });
+    }
+
     // Verify signature
     const message = `Login to Mie Yamin Loyalty: ${nonce}`;
-    const recoveredAddress = ethers.utils.verifyMessage(message, signature);
+    let recoveredAddress;
+    try {
+      recoveredAddress = ethers.utils.verifyMessage(message, signature);
+    } catch (e) {
+      console.error('Signature verify error:', e);
+      return res.status(400).json({ error: 'Signature tidak valid' });
+    }
 
     if (recoveredAddress.toLowerCase() !== address.toLowerCase()) {
       return res.status(400).json({ error: 'Signature tidak valid' });
     }
+
+    // consume nonce
+    nonces.delete(lower);
 
     // Find or create user
     let user = await User.findOne({ walletAddress: address.toLowerCase() });
