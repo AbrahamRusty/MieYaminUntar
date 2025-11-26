@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useEffect, useState } from "react";
 
 export default function AdminMenuPage() {
@@ -34,10 +35,27 @@ export default function AdminMenuPage() {
     }
   };
 
+=======
+import React, { useEffect, useState } from 'react';
+
+const AdminMenu = () => {
+  const [menu, setMenu] = useState([]);
+  const [editingItem, setEditingItem] = useState(null);
+  const [addingCategoryId, setAddingCategoryId] = useState(null);
+  const [formData, setFormData] = useState({
+    category: '',
+    title: '',
+    description: '',
+    price: '',
+    imageUrl: '',
+  });
+
+>>>>>>> Stashed changes
   useEffect(() => {
     fetchMenu();
   }, []);
 
+<<<<<<< Updated upstream
   // Handle input change in form
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,11 +78,32 @@ export default function AdminMenuPage() {
   const openEditForm = (category, item) => {
     setFormData({
       category,
+=======
+  const fetchMenu = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/menu');
+      const data = await res.json();
+      setMenu(data);
+    } catch (error) {
+      console.error('Failed to fetch menu:', error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleEditClick = (categoryId, item) => {
+    setEditingItem({ categoryId, itemId: item._id });
+    setFormData({
+      category: categoryId,
+>>>>>>> Stashed changes
       title: item.title,
       description: item.description,
       price: item.price,
       imageUrl: item.imageUrl,
     });
+<<<<<<< Updated upstream
     setEditItem({ category, item });
     setShowForm(true);
   };
@@ -138,10 +177,97 @@ export default function AdminMenuPage() {
   const handleOverlayClick = (e) => {
     if (e.target.id === "modalOverlay") {
       setShowForm(false);
+=======
+  };
+
+  const handleCancel = () => {
+    setEditingItem(null);
+    setAddingCategoryId(null);
+    setFormData({
+      category: '',
+      title: '',
+      description: '',
+      price: '',
+      imageUrl: '',
+    });
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/menu/${editingItem.categoryId}/item/${editingItem.itemId}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          title: formData.title,
+          description: formData.description,
+          price: formData.price,
+          imageUrl: formData.imageUrl,
+        }),
+      });
+      if (res.ok) {
+        await fetchMenu();
+        handleCancel();
+      } else {
+        console.error('Failed to update item');
+      }
+    } catch (error) {
+      console.error('Error updating item:', error);
+    }
+  };
+
+  const handleDelete = async (categoryId, itemId) => {
+    if (!window.confirm('Are you sure you want to delete this item?')) return;
+    try {
+      const res = await fetch(`http://localhost:5000/api/menu/${categoryId}/item/${itemId}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        await fetchMenu();
+      } else {
+        console.error('Failed to delete item');
+      }
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
+
+  const handleAddClick = (categoryId) => {
+    setAddingCategoryId(categoryId);
+    setFormData({
+      category: categoryId,
+      title: '',
+      description: '',
+      price: '',
+      imageUrl: '',
+    });
+  };
+
+  const handleAdd = async () => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/menu/${addingCategoryId}/item`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          title: formData.title,
+          description: formData.description,
+          price: formData.price,
+          imageUrl: formData.imageUrl,
+        }),
+      });
+      if (res.ok) {
+        await fetchMenu();
+        handleCancel();
+      } else {
+        console.error('Failed to add item');
+      }
+    } catch (error) {
+      console.error('Error adding item:', error);
+>>>>>>> Stashed changes
     }
   };
 
   return (
+<<<<<<< Updated upstream
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Menu Management</h1>
       <button
@@ -313,8 +439,95 @@ export default function AdminMenuPage() {
               </div>
             </form>
           </div>
+=======
+    <div>
+      <h2>Admin Menu Management</h2>
+      {menu.map(category => (
+        <div key={category._id} style={{ marginBottom: '30px' }}>
+          <h3>{category.category}</h3>
+          <button onClick={() => handleAddClick(category._id)}>Add New Item</button>
+          <table border="1" cellPadding="5" cellSpacing="0" style={{ width: '100%' }}>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {category.items.map(item => (
+                <tr key={item._id}>
+                  <td>{item.title}</td>
+                  <td>{item.description}</td>
+                  <td>{item.price}</td>
+                  <td>
+                    <img src={item.imageUrl} alt={item.title} style={{ width: '80px' }} />
+                  </td>
+                  <td>
+                    <button onClick={() => handleEditClick(category._id, item)}>Edit</button>
+                    <button onClick={() => handleDelete(category._id, item._id)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+              {addingCategoryId === category._id && (
+                <tr>
+                  <td>
+                    <input type="text" name="title" value={formData.title} onChange={handleInputChange} required />
+                  </td>
+                  <td>
+                    <input type="text" name="description" value={formData.description} onChange={handleInputChange} required />
+                  </td>
+                  <td>
+                    <input type="text" name="price" value={formData.price} onChange={handleInputChange} required />
+                  </td>
+                  <td>
+                    <input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleInputChange} required />
+                  </td>
+                  <td>
+                    <button onClick={handleAdd}>Add</button>
+                    <button onClick={handleCancel}>Cancel</button>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      ))}
+
+      {editingItem && (
+        <div style={{ marginTop: '20px' }}>
+          <h3>Edit Item</h3>
+          <form onSubmit={e => { e.preventDefault(); handleUpdate(); }}>
+            <div>
+              <label>Title:</label>
+              <input type="text" name="title" value={formData.title} onChange={handleInputChange} required />
+            </div>
+            <div>
+              <label>Description:</label>
+              <input type="text" name="description" value={formData.description} onChange={handleInputChange} required />
+            </div>
+            <div>
+              <label>Price:</label>
+              <input type="text" name="price" value={formData.price} onChange={handleInputChange} required />
+            </div>
+            <div>
+              <label>Image URL:</label>
+              <input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleInputChange} required />
+            </div>
+            <button type="submit">Save</button>
+            <button type="button" onClick={handleCancel}>Cancel</button>
+          </form>
+>>>>>>> Stashed changes
         </div>
       )}
     </div>
   );
+<<<<<<< Updated upstream
 }
+=======
+};
+
+export default AdminMenu;
+>>>>>>> Stashed changes

@@ -75,8 +75,12 @@ const menuRoutes = require('../../backend/routes/menu');
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/loyalty", require("./routes/loyalty"));
+<<<<<<< Updated upstream
 app.use("/api/admin", require("./routes/admin"));
 app.use('/api', menuRoutes);
+=======
+app.use("/api/menu", require("./routes/menu"));
+>>>>>>> Stashed changes
 
 // Health check
 app.get("/health", (req, res) => {
