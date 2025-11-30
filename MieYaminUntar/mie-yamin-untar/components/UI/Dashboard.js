@@ -68,7 +68,7 @@ export default function Dashboard() {
         return;
       }
 
-      toast.loading('Memproses transaksi wallet (dummy)...');
+      toast.loading('Memproses transaksi wallet...');
       try {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         toast.success(`Pembayaran membership ${tier} via wallet berhasil (dummy).`);
@@ -123,19 +123,19 @@ export default function Dashboard() {
             </div>
             <div className="mb-2">
               <strong>Nama:</strong>
-              <div>John Doe</div>
+              <div>Abraham</div>
             </div>
             <div className="mb-2">
               <strong>Email:</strong>
-              <div>john.doe@example.com</div>
+              <div>Abraham123@gmail.com</div>
             </div>
             <div className="mb-2">
               <strong>No. Telepon:</strong>
-              <div>+62 812 3456 7890</div>
+              <div>08123456789</div>
             </div>
             <div>
               <strong>Bio:</strong>
-              <div>Saya suka mie ayam dan kopi.</div>
+              <div>Saya suka ayam.</div>
             </div>
             <div className="mt-3 text-center">
               <Button
@@ -524,19 +524,19 @@ export default function Dashboard() {
                   <form>
                     <div className="mb-3">
                       <label htmlFor="name" className="form-label">Nama</label>
-                      <input id="name" type="text" className="form-control" placeholder="John Doe" />
+                      <input id="name" type="text" className="form-control" placeholder="Abraham" />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="email" className="form-label">Email</label>
-                      <input id="email" type="email" className="form-control" placeholder="john.doe@example.com" />
+                      <input id="email" type="email" className="form-control" placeholder="Abraham123@gmail.com" />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="phone" className="form-label">No. Telepon</label>
-                      <input id="phone" type="tel" className="form-control" placeholder="+62 812 3456 7890" />
+                      <input id="phone" type="tel" className="form-control" placeholder="08123456789 " />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="bio" className="form-label">Bio</label>
-                      <textarea id="bio" className="form-control" rows={3} placeholder="Saya suka mie ayam dan kopi." />
+                      <textarea id="bio" className="form-control" rows={3} placeholder="Saya suka ayam." />
                     </div>
                     <Button type="submit" className="btn-brand-primary">Save Changes</Button>
                   </form>
