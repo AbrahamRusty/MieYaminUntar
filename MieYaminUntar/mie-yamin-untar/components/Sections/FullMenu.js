@@ -37,12 +37,6 @@ const menuItems = [
     price: 'Rp5.000',
     imageUrl: '/menu/es-teh.png', // Ganti path gambar
   },
-  {
-    title: 'Menu Lain',
-    description: 'Deskripsi menu lain',
-    price: 'Rp15.000',
-    imageUrl: '/menu/default.png', // Ganti path gambar
-  },
 ];
 
 export default function FullMenu() {
