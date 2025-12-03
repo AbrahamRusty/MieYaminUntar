@@ -212,4 +212,87 @@ router.post('/wallet-login', async (req, res) => {
   }
 });
 
+// In-memory user store for when database is not connected
+const inMemoryUsers = new Map();
+
+// Create user endpoint for Thunder Client
+router.post('/create-user', async (req, res) => {
+  try {
+    const { email, name, walletAddress, avatar, membershipTier } = req.body;
+
+    // Validate required fields
+    if (!email) {
+      return res.status(400).json({ error: 'Email diperlukan' });
+    }
+
+    const mongoose = require('mongoose');
+
+    // Check if database is connected
+    if (mongoose.connection.readyState !== 1) {
+      // Database not connected, use in-memory store
+      const emailLower = email.toLowerCase();
+
+      // Check if user already exists in memory
+      if (inMemoryUsers.has(emailLower)) {
+        return res.status(400).json({ error: 'User dengan email ini sudah ada' });
+      }
+
+      // Create new user in memory
+      const newUser = {
+        id: Date.now().toString(),
+        email: emailLower,
+        name,
+        walletAddress: walletAddress ? walletAddress.toLowerCase() : undefined,
+        avatar,
+        membershipTier: membershipTier || 'none',
+        isEmailVerified: false,
+        createdAt: new Date()
+      };
+
+      inMemoryUsers.set(emailLower, newUser);
+
+      return res.status(201).json({
+        message: 'User berhasil dibuat (in-memory mode)',
+        user: newUser
+      });
+    }
+
+    // Database is connected, use normal operations
+    // Check if user already exists
+    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User dengan email ini sudah ada' });
+    }
+
+    // Create new user
+    const newUser = new User({
+      email: email.toLowerCase(),
+      name,
+      walletAddress: walletAddress ? walletAddress.toLowerCase() : undefined,
+      avatar,
+      membershipTier: membershipTier || 'none',
+      isEmailVerified: false,
+      createdAt: new Date()
+    });
+
+    // Save to database
+    await newUser.save();
+
+    res.status(201).json({
+      message: 'User berhasil dibuat',
+      user: {
+        id: newUser._id,
+        email: newUser.email,
+        name: newUser.name,
+        walletAddress: newUser.walletAddress,
+        membershipTier: newUser.membershipTier,
+        createdAt: newUser.createdAt
+      }
+    });
+  } catch (error) {
+    console.error('Create user error:', error);
+    res.status(500).json({ error: 'Gagal membuat user' });
+  }
+});
+
 module.exports = router;
