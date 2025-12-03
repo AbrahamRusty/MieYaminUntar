@@ -50,6 +50,7 @@ app.use(limiter);
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/loyalty", require("./routes/loyalty"));
+app.use("/api/menu", require("./routes/menu"));
 
 // Database connection
 // Connect to MongoDB with proper configuration
