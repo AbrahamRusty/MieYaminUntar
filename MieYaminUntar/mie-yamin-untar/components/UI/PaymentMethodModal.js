@@ -79,7 +79,7 @@ export default function PaymentMethodModal({ show, onHide, onSelectMethod, selec
           <h6 className="mb-2">Catatan:</h6>
           <ul className="mb-0 small text-muted">
             <li>Pembayaran dengan Web3 Wallet menggunakan token IDRX</li>
-            <li>QRIS menampilkan barcode dummy untuk simulasi</li>
+            <li>QRIS menampilkan barcode</li>
             <li>Transfer Bank menampilkan rekening BCA Mie Yamin Untar</li>
             <li>Pastikan saldo IDRX Anda mencukupi untuk transaksi</li>
           </ul>

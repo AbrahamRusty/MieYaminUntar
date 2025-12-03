@@ -78,9 +78,6 @@ export default function AuthPage() {
             </Form>
 
             <hr />
-            <div className="text-center">
-              <small className="text-muted">Autentikasi ini adalah contoh client-side. Untuk integrasi nyata, hubungkan ke backend.</small>
-            </div>
           </div>
         </Col>
       </Row>
