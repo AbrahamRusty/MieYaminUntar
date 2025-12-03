@@ -1,0 +1,24 @@
+{
+  "userId": "507f1f77bcf86cd799439011",
+  "items": [
+    {
+      "menuId": "507f1f77bcf86cd799439012",
+      "quantity": 2,
+      "notes": "Extra spicy please"
+    },
+    {
+      "menuId": "507f1f77bcf86cd799439013",
+      "quantity": 1,
+      "notes": "No onions"
+    }
+  ],
+  "paymentMethod": "cash",
+  "deliveryAddress": {
+    "street": "Jl. Sudirman No. 123",
+    "city": "Jakarta",
+    "postalCode": "10110",
+    "notes": "Apartment building, ring bell #5"
+  },
+  "phoneNumber": "+6281234567890",
+  "specialInstructions": "Please call when arriving"
+}
