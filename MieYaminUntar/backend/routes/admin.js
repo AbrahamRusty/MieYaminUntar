@@ -152,6 +152,74 @@ router.get('/menus', isAdmin, async (req, res) => {
 
 // ORDERS MANAGEMENT ROUTES
 
+// POST /api/admin/orders - Create new order
+router.post('/orders', isAdmin, async (req, res) => {
+  try {
+    const {
+      userName,
+      items,
+      paymentMethod,
+      deliveryAddress,
+      phoneNumber,
+      specialInstructions
+    } = req.body;
+
+    // Validate required fields
+    if (!userName || !items || items.length === 0 || !paymentMethod) {
+      return res.status(400).json({
+        error: 'User name, items, and payment method are required'
+      });
+    }
+
+    // Find or create user
+    let user = await User.findOne({ name: userName });
+    if (!user) {
+      // Create new user with placeholder email
+      user = new User({
+        name: userName,
+        email: `${userName.toLowerCase().replace(/\s+/g, '')}@admin.local`, // Placeholder email
+        isEmailVerified: true // Mark as verified for admin-created users
+      });
+      await user.save();
+    }
+
+    // Validate items and calculate total
+    let totalAmount = 0;
+    for (const item of items) {
+      if (!item.menuId || !item.name || !item.price || !item.quantity) {
+        return res.status(400).json({
+          error: 'Each item must have menuId, name, price, and quantity'
+        });
+      }
+      totalAmount += item.price * item.quantity;
+    }
+
+    // Create new order
+    const newOrder = new FoodOrder({
+      userId: user._id,
+      items,
+      totalAmount,
+      paymentMethod,
+      deliveryAddress,
+      phoneNumber,
+      specialInstructions,
+      status: 'pending',
+      paymentStatus: 'pending'
+    });
+
+    const savedOrder = await newOrder.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Order created successfully',
+      data: savedOrder
+    });
+  } catch (error) {
+    console.error('Create order error:', error);
+    res.status(500).json({ error: 'Failed to create order' });
+  }
+});
+
 // GET /api/admin/orders - Get all orders
 router.get('/orders', isAdmin, async (req, res) => {
   try {
