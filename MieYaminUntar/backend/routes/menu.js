@@ -117,9 +117,12 @@ router.post('/', upload.single('image'), async (req, res) => {
         return res.status(400).json({ error: 'Nama, harga, dan kategori diperlukan untuk semua item' });
       }
 
+      // Generate custom _id if not provided
+      const customId = _id || `menu_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
       // Create menu using MongoDB model
       const newMenu = new Menu({
-        _id: _id || undefined, // Let MongoDB generate if not provided
+        _id: customId,
         name,
         description,
         price: parseFloat(price),
