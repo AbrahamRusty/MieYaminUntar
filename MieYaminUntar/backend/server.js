@@ -47,15 +47,35 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Database connection
-// Connect to MongoDB (current driver ignores useNewUrlParser/useUnifiedTopology)
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/mie-yamin-loyalty")
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.error("MongoDB connection error:", err));
-
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/loyalty", require("./routes/loyalty"));
+app.use("/api/menu", require("./routes/menu"));
+app.use("/api/food-orders", require("./routes/foodOrder"));
+app.use("/api/admin", require("./routes/admin"));
+
+// Database connection
+// Connect to MongoDB with proper configuration
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/mie-yamin-loyalty", {
+      // Modern Mongoose doesn't need these options, but keeping for compatibility
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      socketTimeoutMS: 45000 // Close sockets after 45s of inactivity
+    });
+
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    // Don't exit, let the server run without DB for now
+    // process.exit(1);
+  }
+};
+
+connectDB();
 
 // Health check
 app.get("/health", (req, res) => {
